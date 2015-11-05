@@ -1,8 +1,13 @@
 package servlet;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,6 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.postgresql.largeobject.LargeObject;
+import org.postgresql.largeobject.LargeObjectManager;
+
+import classes.Filme;
+import util.BDConnection;
  
 /**
  * A Java servlet that handles file upload from client.
@@ -24,7 +34,7 @@ public class AdicionarFilme extends HttpServlet {
     private static final long serialVersionUID = 1L;
      
     // location to store file uploaded
-    private static final String UPLOAD_DIRECTORY = "upload";
+  //  private static final String UPLOAD_DIRECTORY = "upload";
  
     // upload settings
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
@@ -49,7 +59,9 @@ public class AdicionarFilme extends HttpServlet {
             return;
         }
         
-        String nome = null,descricao = null,trailer = null, nomeArquivo = null;
+        String nome = null,descricao = null,trailer = null, nomeArquivo = null, extensao = null;
+        File storeFile = null;
+        long oid = 0;
     	categorias = null;
         
         // configures upload settings
@@ -79,8 +91,8 @@ public class AdicionarFilme extends HttpServlet {
  
         try {
             // parses the request's content to extract file data
-            List items = upload.parseRequest(request);
-            Iterator iterator = items.iterator();
+            List<FileItem> items = upload.parseRequest(request);
+            Iterator<FileItem> iterator = items.iterator();
             while (iterator.hasNext()) {
                 FileItem item = (FileItem) iterator.next();
 
@@ -88,10 +100,23 @@ public class AdicionarFilme extends HttpServlet {
                 	String fileName = new File(item.getName()).getName();
                     String filePath = uploadPath + File.separator + fileName;
                     nomeArquivo=fileName;
-                    File storeFile = new File(filePath);
-
-                    // saves the file on disk
+                    extensao = nomeArquivo.substring(nomeArquivo.lastIndexOf(".")+1, nomeArquivo.length());
+                    storeFile = new File(filePath);
+                    // salva o arquivo
                     item.write(storeFile);
+                    
+                    /*Connection conn = BDConnection.getConnection();
+                    conn.setAutoCommit(false);
+                    oid = retornaImgLong(storeFile,conn);
+                    
+                    //adiciona ao banco
+                    PreparedStatement ps = conn.prepareStatement("INSERT INTO imagens(id,tipo,imagem) VALUES (1,?, ?)");
+                    ps.setString(1, "TIPO");
+                    ps.setLong(2, oid);
+                    ps.executeUpdate();
+                    conn.commit();
+                    */
+                    
                     request.setAttribute("message","Upload has been done successfully!");
                 }else{
                 	String resultado = item.getFieldName();
@@ -110,16 +135,55 @@ public class AdicionarFilme extends HttpServlet {
                 	} 
                 	
                 }
+                Filme x = new Filme();
+                x.novoFilme(nome, descricao, trailer);
+                //adiciona novo filme
+                x.cadastrarFilme(x);
+                //adiciona a capa
+                x.adicionarCapa(x, extensao, oid);
+                //deleta o temporario
+                storeFile.delete();
             }
               
         } catch (Exception ex) {
             request.setAttribute("message",
                     "There was an error: " + ex.getMessage());
+            ex.printStackTrace();
         }
         // redirects client to message page
+        
         PrintWriter out = response.getWriter();
-        out.println(nome +" "+ descricao +" "+ categorias +" "+ trailer + " "+nomeArquivo );
-       // getServletContext().getRequestDispatcher("/message.jsp").forward(
-         //       request, response);
+        boolean valida = extensao.matches("(BMP|jpeg|WBMP|GIF|bmp|jpg|JPG|wbmp|png|PNG|JPEG|gif|tiff)$");
+        out.println(nome +" "+ descricao +" "+ categorias +" "+ trailer + " "+nomeArquivo+" "+ extensao+" "+valida );
+       //getServletContext().getRequestDispatcher("/formulario.jsp").forward(
+       //        request, response);
     }
+    
+    public long retornaImgLong(File file, Connection conn) throws SQLException, IOException{
+        // Get the Large Object Manager to perform operations with
+        LargeObjectManager lobj = ((org.postgresql.PGConnection)conn).getLargeObjectAPI();
+    	
+        long oid = lobj.createLO(LargeObjectManager.READ | LargeObjectManager.WRITE);
+
+        // Open the large object for writing
+        LargeObject obj = lobj.open(oid, LargeObjectManager.WRITE);
+
+        // Now open the file
+        FileInputStream fis = new FileInputStream(file);
+
+        // Copy the data from the file to the large object
+        byte buf[] = new byte[2048];
+        int s;
+        while ((s = fis.read(buf, 0, 2048)) > 0) {
+            obj.write(buf, 0, s);
+          //  tl += s;
+        }
+
+        // Close the large object
+        obj.close();
+        fis.close();
+        
+        return oid;
+    }
+    
 }

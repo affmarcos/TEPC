@@ -17,16 +17,42 @@ public class FilmeDAOPostgres implements FilmeDAO {
 		Connection conexao;
 		PreparedStatement comandoSQL;
 		
-		String sql = "INSERT INTO filmes(nome,descricao,capa,trailer,excluido) VALUES(?,?,?,?,'false')";		
+		if(!verificaExistenciaFilme(filme.getNome())){
+		
+			String sql = "INSERT INTO filmes(nome,descricao,trailer,excluido) VALUES(?,?,?,'false')";		
+			try {
+				conexao = BDConnection.getConnection();
+				comandoSQL = conexao.prepareStatement(sql);
+				comandoSQL.setString(1, filme.getNome());
+				comandoSQL.setString(2, filme.getDescricao());
+				comandoSQL.setString(3, filme.getTrailer());
+				comandoSQL.executeUpdate();
+				
+			} catch (SQLException e) {
+				return false;
+			}
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public boolean update(Filme filme,int id) {
+		Connection conexao;
+		PreparedStatement comandoSQL;
+		
+		String sql = "Update Filmes set nome = ?,"
+				+ " descricao = ?, trailer = ? where id= ?";		
 		try {
 			conexao = BDConnection.getConnection();
 			comandoSQL = conexao.prepareStatement(sql);
 			comandoSQL.setString(1, filme.getNome());
 			comandoSQL.setString(2, filme.getDescricao());
-			comandoSQL.setString(3, filme.getImagem());
-			comandoSQL.setString(4, filme.getTrailer());
+			comandoSQL.setString(3, filme.getTrailer());
+			comandoSQL.setInt(4, id);
 			comandoSQL.executeUpdate();
-			
+			conexao.close();
 		} catch (SQLException e) {
 			return false;
 		}
@@ -34,25 +60,15 @@ public class FilmeDAOPostgres implements FilmeDAO {
 	}
 
 	@Override
-	public boolean update(Filme filme) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean delete(Filme filme) {
+	public boolean delete(int id) {
 		Connection conexao;
 		PreparedStatement comandoSQL;
 		
-		String sql = "Update Filmes set desativado = '1' where nome = ?,"
-				+ " descricao = ?, capa = ?, trailer = ?";		
+		String sql = "Update Filmes set desativado = '1' where id = ?";		
 		try {
 			conexao = BDConnection.getConnection();
 			comandoSQL = conexao.prepareStatement(sql);
-			comandoSQL.setString(1, filme.getNome());
-			comandoSQL.setString(2, filme.getDescricao());
-			comandoSQL.setString(3, filme.getImagem());
-			comandoSQL.setString(4, filme.getTrailer());
+			comandoSQL.setInt(1, id);
 			comandoSQL.executeUpdate();
 			conexao.close();
 		} catch (SQLException e) {
@@ -79,17 +95,68 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			while (resultado.next()) {
 				nome = resultado.getString("nome");
 				descricao = resultado.getString("descricao");
-				imagem = resultado.getString("capa");
 				trailer = resultado.getString("trailer");
-				//visualizacoes = resultado.getLong("visualizacoes");
 				
-				filmes.add(new Filme().novoFilme(nome, descricao, imagem, trailer));
+				filmes.add(new Filme().novoFilme(nome, descricao, trailer));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 		return filmes;
+		
+	}
+	
+	
+	public ArrayList<String> listarCategorias(){
+		
+		Connection conexao;
+		PreparedStatement comandoSQL;
+		ResultSet resultado;
+		String nome = null, descricao = null,imagem = null,trailer = null;
+		//long visualizacoes = 0;
+		ArrayList<String> categorias = new ArrayList<String>();
+		
+		String sql = "SELECT NOME FROM categoria;";		
+		try {
+			conexao = BDConnection.getConnection();
+			comandoSQL = conexao.prepareStatement(sql);
+			resultado = comandoSQL.executeQuery();
+			while (resultado.next()) {
+				nome = resultado.getString("nome");
+				
+				categorias.add(nome);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return categorias;
+		
+		
+	}
+	
+	public int buscaId(String filmeNome) {
+		
+		Connection conexao;
+		PreparedStatement comandoSQL;
+		ResultSet resultado;		
+		int id=0;
+		String sql = "SELECT ID FROM FILMES where nome = ?;";		
+		try {
+			conexao = BDConnection.getConnection();
+			comandoSQL = conexao.prepareStatement(sql);
+			comandoSQL.setString(1, filmeNome);
+			resultado = comandoSQL.executeQuery();
+			while (resultado.next()) {
+				id = resultado.getInt("id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
+		return id;
 		
 	}
 	
@@ -111,6 +178,40 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			e.printStackTrace();
 			return false;
 		}	
+	}
+
+	@Override
+	public boolean adicionarCapa(Filme filme, String tipo, long imagem) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public boolean adicionarImagemFilme(Filme filme, long imagem, String extensao) {
+		Connection conn;
+		PreparedStatement ps;
+		
+		if(!verificaExistenciaFilme(filme.getNome())){
+		
+			String sql = "INSERT INTO imagens(id,tipo,imagem) VALUES (1,?, ?)";		
+			try {
+				conn = BDConnection.getConnection();
+                conn.setAutoCommit(false);
+                // salva o arquivo
+                              
+                //adiciona ao banco
+                ps = conn.prepareStatement("INSERT INTO imagens(id,tipo,imagem) VALUES (1,?, ?)");
+                ps.setString(1, extensao);
+                ps.setLong(2, imagem);
+                ps.executeUpdate();
+                conn.commit();
+				
+			} catch (SQLException e) {
+				return false;
+			}
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 

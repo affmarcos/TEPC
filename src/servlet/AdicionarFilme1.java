@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,6 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import util.BDConnection;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -86,8 +89,7 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
 
 
 private void upload(HttpServletRequest request, HttpServletResponse response, MultipartRequest multipartRequest) throws IOException, ServletException { //OK  
-
-    PrintWriter out = response.getWriter();
+	PrintWriter out = response.getWriter();
 	FilmeDAOPostgres cadastro = new FilmeDAOPostgres();
 	
 	/*String nome = request.getParameter("name");
