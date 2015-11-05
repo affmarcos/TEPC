@@ -92,7 +92,7 @@ public class AdicionarFilme extends HttpServlet {
                         // saves the file on disk
                         item.write(storeFile);
                         request.setAttribute("message","Upload has been done successfully!");
-                    }else if (item.isFormField()) {
+                    }else {
                     	
                     	/*
                     	String resultado = item.getFieldName();
