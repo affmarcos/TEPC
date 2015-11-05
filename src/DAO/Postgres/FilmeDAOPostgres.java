@@ -148,9 +148,8 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			comandoSQL = conexao.prepareStatement(sql);
 			comandoSQL.setString(1, filmeNome);
 			resultado = comandoSQL.executeQuery();
-			while (resultado.next()) {
-				id = resultado.getInt("id");
-			}
+			resultado.next();
+			id = resultado.getInt("id");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 0;
@@ -181,27 +180,24 @@ public class FilmeDAOPostgres implements FilmeDAO {
 	}
 
 	@Override
-	public boolean adicionarCapa(Filme filme, String tipo, long imagem) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	public boolean adicionarImagemFilme(Filme filme, long imagem, String extensao) {
+	public boolean adicionarCapa(Filme filme, String extensao, long imagem) {
 		Connection conn;
 		PreparedStatement ps;
 		
-		if(!verificaExistenciaFilme(filme.getNome())){
+		if(verificaExistenciaFilme(filme.getNome())){
 		
-			String sql = "INSERT INTO imagens(id,tipo,imagem) VALUES (1,?, ?)";		
+			int idFilme = buscaId(filme.getNome());
+			String sql = "INSERT INTO imagens(id,tipo,imagem) VALUES (?,?, ?)";		
 			try {
 				conn = BDConnection.getConnection();
                 conn.setAutoCommit(false);
                 // salva o arquivo
                               
                 //adiciona ao banco
-                ps = conn.prepareStatement("INSERT INTO imagens(id,tipo,imagem) VALUES (1,?, ?)");
-                ps.setString(1, extensao);
-                ps.setLong(2, imagem);
+                ps = conn.prepareStatement("INSERT INTO imagens(id,tipo,imagem) VALUES (?,?, ?)");
+                ps.setInt(1, idFilme);
+                ps.setString(2, extensao);
+                ps.setLong(3, imagem);
                 ps.executeUpdate();
                 conn.commit();
 				
@@ -213,6 +209,7 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			return false;
 		}
 	}
+	
 
 
 

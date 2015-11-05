@@ -41,7 +41,7 @@ public class ImagemPostgres {
 				e.printStackTrace();
 			} 
 		    
-		    File outputFile = new File("WebContent/images/"+nome);  
+		    File outputFile = new File("workspace/TEPC/WebContent/images/"+nome);  
 		       System.out.println("Gravando o arquivo.....");  
 		       BufferedImage input;
 			try {

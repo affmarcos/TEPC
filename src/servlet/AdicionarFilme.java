@@ -22,6 +22,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.postgresql.largeobject.LargeObject;
 import org.postgresql.largeobject.LargeObjectManager;
 
+import DAO.Postgres.ImagemPostgres;
 import classes.Filme;
 import util.BDConnection;
  
@@ -59,10 +60,10 @@ public class AdicionarFilme extends HttpServlet {
             return;
         }
         
-        String nome = null,descricao = null,trailer = null, nomeArquivo = null, extensao = null;
+        String nome = null,descricao = null, categorias = null,trailer = null, nomeArquivo = null, extensao = null;
         File storeFile = null;
         long oid = 0;
-    	categorias = null;
+    	
         
         // configures upload settings
         DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -104,7 +105,9 @@ public class AdicionarFilme extends HttpServlet {
                     storeFile = new File(filePath);
                     // salva o arquivo
                     item.write(storeFile);
-                    
+                    Connection conn = BDConnection.getConnection();
+                    conn.setAutoCommit(false);
+                    oid = retornaImgLong(storeFile,BDConnection.getConnection());
                     /*Connection conn = BDConnection.getConnection();
                     conn.setAutoCommit(false);
                     oid = retornaImgLong(storeFile,conn);
@@ -135,15 +138,21 @@ public class AdicionarFilme extends HttpServlet {
                 	} 
                 	
                 }
-                Filme x = new Filme();
-                x.novoFilme(nome, descricao, trailer);
-                //adiciona novo filme
-                x.cadastrarFilme(x);
-                //adiciona a capa
-                x.adicionarCapa(x, extensao, oid);
-                //deleta o temporario
-                storeFile.delete();
+                
             }
+            
+	            Filme x = new Filme();
+	            x.novoFilme(nome, descricao, trailer);
+	            //adiciona novo filme
+	            x.cadastrarFilme(x);
+	            //adiciona a capa
+	            if(x.adicionarCapa(x, extensao, oid)){
+		            //cria a imagem na pasta de imagens
+		            ImagemPostgres i = new ImagemPostgres();
+		            i.getImagem(x.buscaId(nome)); 
+	            }
+	           //deleta o temporario
+	            storeFile.delete();
               
         } catch (Exception ex) {
             request.setAttribute("message",
@@ -153,8 +162,8 @@ public class AdicionarFilme extends HttpServlet {
         // redirects client to message page
         
         PrintWriter out = response.getWriter();
-        boolean valida = extensao.matches("(BMP|jpeg|WBMP|GIF|bmp|jpg|JPG|wbmp|png|PNG|JPEG|gif|tiff)$");
-        out.println(nome +" "+ descricao +" "+ categorias +" "+ trailer + " "+nomeArquivo+" "+ extensao+" "+valida );
+       // boolean valida = extensao.matches("(BMP|jpeg|WBMP|GIF|bmp|jpg|JPG|wbmp|png|PNG|JPEG|gif|tiff)$");
+        out.println(nome +" "+ descricao +" "+ categorias +" "+ trailer + " "+nomeArquivo+" "+ extensao );
        //getServletContext().getRequestDispatcher("/formulario.jsp").forward(
        //        request, response);
     }

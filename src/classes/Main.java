@@ -9,7 +9,7 @@ import DAO.Postgres.ImagemPostgres;
 public class Main {
  	public static void main(String[] args) throws IOException, SQLException{
  		
- 		Filme x = new Filme();
+ 		/*Filme x = new Filme();
  		//String isso = x.listar().get(1).getImagem();
  		ArrayList<String> j = x.listarCategorias();
  		
@@ -17,10 +17,10 @@ public class Main {
  			
  			System.out.println(j.get(i));
  		}
- 		/*
+ 		*/
  		ImagemPostgres i = new ImagemPostgres();
- 		System.out.println(i.getImagem(1)); 
+		System.out.println(i.getImagem(10047)); 
  	}
- 	*/
- 	}
+ 	
+ 
 }
