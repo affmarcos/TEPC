@@ -3,13 +3,14 @@ package servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.List;
- 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
- 
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -29,6 +30,8 @@ public class AdicionarFilme extends HttpServlet {
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
     private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
+
+	private String categorias;
  
     /**
      * Upon receiving file upload submission, parses the request to read
@@ -47,7 +50,7 @@ public class AdicionarFilme extends HttpServlet {
         }
         
         String nome = null,descricao = null,trailer = null, nomeArquivo = null;
-    	String[] categoria = null ;
+    	categorias = null;
         
         // configures upload settings
         DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -76,54 +79,47 @@ public class AdicionarFilme extends HttpServlet {
  
         try {
             // parses the request's content to extract file data
-            @SuppressWarnings("unchecked")
-            List<FileItem> formItems = upload.parseRequest(request);
- 
-            if (formItems != null && formItems.size() > 0) {
-                // iterates over form's fields
-                for (FileItem item : formItems) {
-                    // processes only fields that are not form fields
-                    if (!item.isFormField()) {
-                        String fileName = new File(item.getName()).getName();
-                        String filePath = uploadPath + File.separator + fileName;
-                        nomeArquivo=fileName;
-                        File storeFile = new File(filePath);
- 
-                        // saves the file on disk
-                        item.write(storeFile);
-                        request.setAttribute("message","Upload has been done successfully!");
-                    }else {
-                    	
-                    	/*
-                    	String resultado = item.getFieldName();
-                    	
-                    	if(resultado.equals("name")){
-                    		nome = item.getString();
-                    	}
-                    	else if(resultado.equals("categoria")){
-                    		categoria[0] = item.getString();
-                    	}
-                    	else if(resultado.equals("trailer_link")){
-                    		trailer = item.getString();
-                    	}
-                    	else if(resultado.equals("descricao")){
-                			descricao = item.getString();
-                    	} 
-                    	//nome = nome +" "+ item.getString();
-                    	 
-                    	 */
-                    	
-                    }
+            List items = upload.parseRequest(request);
+            Iterator iterator = items.iterator();
+            while (iterator.hasNext()) {
+                FileItem item = (FileItem) iterator.next();
+
+                if (!item.isFormField()) {
+                	String fileName = new File(item.getName()).getName();
+                    String filePath = uploadPath + File.separator + fileName;
+                    nomeArquivo=fileName;
+                    File storeFile = new File(filePath);
+
+                    // saves the file on disk
+                    item.write(storeFile);
+                    request.setAttribute("message","Upload has been done successfully!");
+                }else{
+                	String resultado = item.getFieldName();
+                	
+                	if(resultado.equals("name")){
+                		nome = item.getString();
+                	}
+                	else if(resultado.equals("categoria")){
+                		categorias = item.getString();
+                	}
+                	else if(resultado.equals("trailer_link")){
+                		trailer = item.getString();
+                	}
+                	else if(resultado.equals("descricao")){
+            			descricao = item.getString();
+                	} 
+                	
                 }
             }
+              
         } catch (Exception ex) {
             request.setAttribute("message",
                     "There was an error: " + ex.getMessage());
         }
         // redirects client to message page
-        //PrintWriter out = response.getWriter();
-        //out.println(nome +" "+ descricao +" "+ categoria +" "+ trailer + " "+nomeArquivo );
-        getServletContext().getRequestDispatcher("/message.jsp").forward(
-                request, response);
+        PrintWriter out = response.getWriter();
+        out.println(nome +" "+ descricao +" "+ categorias +" "+ trailer + " "+nomeArquivo );
+       // getServletContext().getRequestDispatcher("/message.jsp").forward(
+         //       request, response);
     }
 }
