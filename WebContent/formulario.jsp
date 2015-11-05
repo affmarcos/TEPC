@@ -87,21 +87,21 @@
 -->
     <div class="grid_8">
       <h3>Cadastro Filme</h3>
-      <form id="form" action="/AdicionarFilme/" method="POST" enctype="multipart/form-data">                            
+      <form action="/TEPC/AdicionarFilme" method="post" enctype="multipart/form-data">                            
       <div class="success_wrapper">
       <div class="success-message">Cadastro realizado!</div>
     </div>
 	
 	<div class="grid_8">
       <label class="name">
-      <input type="text" placeholder="Name:" />
+      <input type="text" name="name" placeholder="Name" />
       
       </label>
     </div>
 	
 	<div class="grid_8">
       <label class="categoria">
-      <input type="text" placeholder="Categoria:" />
+      <input type="text" name="categoria" placeholder="Categoria" />
       
       </label>
     </div>
@@ -110,20 +110,20 @@
 
 <div class="grid_8">
       <label class="trailer_link">
-      <input type="text" placeholder="Link do trailer:" />
+      <input type="text" name="trailer_link" placeholder="Link do trailer" />
      
       </label>
     </div>	
     
-    <%--div class="grid_8"> --%>
+    <div class="grid_8">
       <label class="image">
-      <input type="file"  size="40" name="Imagem:" ></input>     
+      <input type="file"  size="40" placeholder="Imagem" name="imagem" />     
       </label>
-    <%--/div--%>
+    </div>
 	
 	<div class="grid_8">
       <label class="descricao">
-      <textarea type="text" placeholder="Descrição:" ></textarea>
+      <input type="text" name="descricao" placeholder="Descrição" />
      
       </label>
     </div>
@@ -141,8 +141,9 @@
       <div class="clear"></div>
       <div class="btns">
       <a href="#" data-type="reset" class="link1">Limpar</a>
-      <a href="#" data-type="submit" class="link1">Enviar</a></div>
-	</div>
+      <a href="/TEPC/AdicionarFilme" data-type="submit" class="link1">Enviar</a></div>
+      <button type="submit" value="Submit">Submit</button>
+     </div>
       </form>   
     </div>
     <div class="clear"></div>
