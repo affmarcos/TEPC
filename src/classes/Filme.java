@@ -9,6 +9,7 @@ public class Filme extends FilmeDAOPostgres {
 	private String nome;
 	private String descricao;
 	private ArrayList<String> categoria;
+	private String imagem;
 	private String trailer;
 	private long visualizacoes;
 		
@@ -36,6 +37,13 @@ public class Filme extends FilmeDAOPostgres {
 	}
 	public void setTrailer(String trailer) {
 		this.trailer = trailer;
+	}
+	
+	public String getImagem() {
+		return imagem;
+	}
+	public void setImagem(String imagem) {
+		this.imagem = imagem;
 	}
 	
 	public Filme novoFilme(String nome,String descricao,String trailer){

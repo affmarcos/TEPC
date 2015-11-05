@@ -12,7 +12,7 @@ public interface FilmeDAO {
 	boolean delete(int id);
 	boolean adicionarCapa(Filme filme, String tipo, long imagem);
 	ArrayList<Categorias> getCategorias();
-	ArrayList<Filme> listar();
+	ArrayList<Filme> getFilmes();
 	
 
 }

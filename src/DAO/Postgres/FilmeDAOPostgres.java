@@ -79,7 +79,7 @@ public class FilmeDAOPostgres implements FilmeDAO {
 	}
 
 	@Override
-	public ArrayList<Filme> listar() {
+	public ArrayList<Filme> getFilmes() {
 		
 		Connection conexao;
 		PreparedStatement comandoSQL;
@@ -88,17 +88,18 @@ public class FilmeDAOPostgres implements FilmeDAO {
 		//long visualizacoes = 0;
 		ArrayList<Filme> filmes = new ArrayList<Filme>();
 		
-		String sql = "SELECT * FROM FILMES;";		
+		String sql = "select * FROM filmes ,imagens WHERE filmes.id=imagens.id;";		
 		try {
 			conexao = BDConnection.getConnection();
 			comandoSQL = conexao.prepareStatement(sql);
 			resultado = comandoSQL.executeQuery();
 			while (resultado.next()) {
 				nome = resultado.getString("nome");
-				descricao = resultado.getString("descricao");
-				trailer = resultado.getString("trailer");
-				
-				filmes.add(new Filme().novoFilme(nome, descricao, trailer));
+				imagem =resultado.getString("name")+"."+resultado.getString("tipo");
+				Filme x = new Filme();
+				x.setNome(nome);
+				x.setImagem(imagem);
+				filmes.add(x);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -19,7 +19,7 @@ import util.BDConnection;
 public class ImagemPostgres {
 	
 	 public boolean getImagem(int idFilme)  {   
-		    String sql = "select imagem,nome,tipo from imagens where id = ?";  
+		    String sql = "select imagem,name,tipo from imagens where id = ?";  
 		    InputStream logo = null;  		  
 		    Connection conn = BDConnection.getConnection();
 		    PreparedStatement p =null;
@@ -33,7 +33,7 @@ public class ImagemPostgres {
 			    while(result.next()) {  
 			    	Blob blob = result.getBlob("imagem");
 			    	tipo = result.getString("tipo");
-			    	nome = result.getString("nome")+"."+tipo;
+			    	nome = result.getString("name")+"."+tipo;
 			    	byte[] bin = blob.getBytes(1, (int) blob.length());  
 			    	logo = new ByteArrayInputStream(bin); 
 			    }  

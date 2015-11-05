@@ -11,12 +11,9 @@ public class Main {
  		
  		Filme x = new Filme();
  		//String isso = x.listar().get(1).getImagem();
- 		ArrayList<Categorias> j = x.getCategorias();
- 		ImagemPostgres d = new ImagemPostgres();
- 		for(int i=1438;i<10450;i++){
- 			System.out.println(d.getImagem(i));
- 			System.out.println(i);
- 
+ 		ArrayList<Filme> j = x.getFilmes();
+ 		for (int i=0;i<j.size();i++){
+ 			System.out.println(j.get(i).getImagem() +j.get(i).getNome());
  		}
  		
  	}
