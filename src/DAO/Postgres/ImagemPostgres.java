@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.IllegalArgumentException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -17,12 +18,12 @@ import util.BDConnection;
 
 public class ImagemPostgres {
 	
-	 public InputStream getImagem(int idFilme)  {   
+	 public boolean getImagem(int idFilme)  {   
 		    String sql = "select imagem,nome,tipo from imagens where id = ?";  
 		    InputStream logo = null;  		  
 		    Connection conn = BDConnection.getConnection();
-		    PreparedStatement p;
-		    ResultSet result;
+		    PreparedStatement p =null;
+		    ResultSet result =null;
 		    String nome=null,tipo=null;
 		    try {
 				conn.setAutoCommit(false);
@@ -38,21 +39,30 @@ public class ImagemPostgres {
 			    }  
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				return false;
 			} 
 		    
 		    File outputFile = new File("workspace/TEPC/WebContent/images/"+nome);  
 		       System.out.println("Gravando o arquivo.....");  
-		       BufferedImage input;
+		       BufferedImage input =null;
 			try {
-				input = ImageIO.read(logo);
-			       ImageIO.write(input, tipo, outputFile); 
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				try {
+					input = ImageIO.read(logo);
+				} catch (IOException e) {
+					return false;
+				}
+			    try {
+					ImageIO.write(input, tipo, outputFile);
+				} catch (IOException e) {
+					return false;
+				}
+			    return true;
+			       
+			} catch (IllegalArgumentException  e) {
+				//e.printStackTrace();
+				return false;
 			}  
-		  
-			return logo;  
 		}  
 
 }

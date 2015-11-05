@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import classes.Categorias;
 import classes.Filme;
 import util.BDConnection;
 import DAO.FilmeDAO;
@@ -108,24 +109,29 @@ public class FilmeDAOPostgres implements FilmeDAO {
 	}
 	
 	
-	public ArrayList<String> listarCategorias(){
+	public ArrayList<Categorias> getCategorias(){
 		
 		Connection conexao;
 		PreparedStatement comandoSQL;
 		ResultSet resultado;
-		String nome = null, descricao = null,imagem = null,trailer = null;
+		String nome = null,capa=null;
 		//long visualizacoes = 0;
-		ArrayList<String> categorias = new ArrayList<String>();
+		ArrayList<Categorias> categorias = new ArrayList<Categorias>();
 		
-		String sql = "SELECT NOME FROM categoria;";		
+		String sql = "SELECT nome,capaimagem FROM categoria;";		
 		try {
 			conexao = BDConnection.getConnection();
 			comandoSQL = conexao.prepareStatement(sql);
 			resultado = comandoSQL.executeQuery();
 			while (resultado.next()) {
+				Categorias cat = new Categorias();
 				nome = resultado.getString("nome");
+				capa = resultado.getString("capaimagem");
+				cat.setNome(nome);
+				cat.setCapa(capa);
 				
-				categorias.add(nome);
+				
+				categorias.add(cat);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
