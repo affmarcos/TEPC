@@ -57,8 +57,8 @@ public class Filme extends FilmeDAOPostgres {
 	public ArrayList<String> getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(ArrayList<String> categoria) {
-		this.categoria = categoria;
+	public void setCategoria(String categoria) {
+		this.categoria.add(categoria);
 	}
 	
 	

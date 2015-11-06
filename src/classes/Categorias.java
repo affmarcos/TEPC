@@ -1,6 +1,8 @@
 package classes;
 
-public class Categorias {
+import DAO.Postgres.CategoriaDAOPostgres;
+
+public class Categorias extends CategoriaDAOPostgres {
 	
 	private String nome;
 	private String capa;
