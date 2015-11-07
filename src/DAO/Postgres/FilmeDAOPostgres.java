@@ -12,6 +12,7 @@ import util.BDConnection;
 import DAO.FilmeDAO;
 
 public class FilmeDAOPostgres implements FilmeDAO {
+	
 
 	@Override
 	public boolean cadastrarFilme(Filme filme) {
@@ -95,10 +96,14 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			resultado = comandoSQL.executeQuery();
 			while (resultado.next()) {
 				nome = resultado.getString("nome");
+				descricao = resultado.getString("descricao");
+				trailer = resultado.getString("trailer");
 				imagem =resultado.getString("name")+"."+resultado.getString("tipo");
 				Filme x = new Filme();
 				x.setNome(nome);
 				x.setImagem(imagem);
+				x.setDescricao(descricao);
+				x.setTrailer(trailer);
 				filmes.add(x);
 			}
 		} catch (SQLException e) {
@@ -106,40 +111,6 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			return null;
 		}
 		return filmes;
-		
-	}
-	
-	
-	public ArrayList<Categorias> getCategorias(){
-		
-		Connection conexao;
-		PreparedStatement comandoSQL;
-		ResultSet resultado;
-		String nome = null,capa=null;
-		//long visualizacoes = 0;
-		ArrayList<Categorias> categorias = new ArrayList<Categorias>();
-		
-		String sql = "SELECT nome,capaimagem FROM categoria;";		
-		try {
-			conexao = BDConnection.getConnection();
-			comandoSQL = conexao.prepareStatement(sql);
-			resultado = comandoSQL.executeQuery();
-			while (resultado.next()) {
-				Categorias cat = new Categorias();
-				nome = resultado.getString("nome");
-				capa = resultado.getString("capaimagem");
-				cat.setNome(nome);
-				cat.setCapa(capa);
-				
-				
-				categorias.add(cat);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-		return categorias;
-		
 		
 	}
 	
@@ -194,7 +165,6 @@ public class FilmeDAOPostgres implements FilmeDAO {
 		if(verificaExistenciaFilme(filme.getNome())){
 		
 			int idFilme = buscaId(filme.getNome());
-			String sql = "INSERT INTO imagens(id,tipo,imagem) VALUES (?,?, ?)";		
 			try {
 				conn = BDConnection.getConnection();
                 conn.setAutoCommit(false);

@@ -11,7 +11,6 @@ public interface FilmeDAO {
 	boolean update(Filme filme, int id);
 	boolean delete(int id);
 	boolean adicionarCapa(Filme filme, String tipo, long imagem);
-	ArrayList<Categorias> getCategorias();
 	ArrayList<Filme> getFilmes();
 	
 

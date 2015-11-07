@@ -1,5 +1,7 @@
 package classes;
 
+import java.util.ArrayList;
+
 import DAO.Postgres.CategoriaDAOPostgres;
 
 public class Categorias extends CategoriaDAOPostgres {
@@ -21,5 +23,21 @@ public class Categorias extends CategoriaDAOPostgres {
 	
 	public void setCapa(String capa){
 		this.capa = capa;
+	}
+	
+	public ArrayList<Filme> getFilmeDaCategoria(){
+		
+		return getFilmcategoria(getNome());
+		
+	}
+	
+	public ArrayList<ArrayList<Filme>> getFilmePorCategoria(){
+		ArrayList<ArrayList<Filme>> filmePorCategoria = new ArrayList<ArrayList<Filme>>();
+		ArrayList<Categorias> categoria = getCategorias();
+		for(int i=0;i<categoria.size();i++){
+			filmePorCategoria.add(getFilmcategoria(categoria.get(i).getNome()));
+		}		
+		
+		return filmePorCategoria;
 	}
 }

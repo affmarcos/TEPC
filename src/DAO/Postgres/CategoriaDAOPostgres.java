@@ -7,19 +7,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import util.BDConnection;
+import classes.Categorias;
 import classes.Filme;
 import DAO.CategoriaDAO;
 
 public class CategoriaDAOPostgres implements CategoriaDAO {
 
-	String nome,capa;
+	//String nome,capa;
 	
 	@Override
-	public ArrayList<Filme> getFilmcategoria() {
+	public ArrayList<Filme> getFilmcategoria(String nomeCategoria) {
 		Connection conexao;
 		PreparedStatement comandoSQL;
 		ResultSet resultado;
-		String descricao = null ,imagem = null,trailer = null;
+		String descricao = null,nome=null ,imagem = null,trailer = null;
 		//long visualizacoes = 0;
 		ArrayList<Filme> filmes = new ArrayList<Filme>();
 		
@@ -27,14 +28,18 @@ public class CategoriaDAOPostgres implements CategoriaDAO {
 		try {
 			conexao = BDConnection.getConnection();
 			comandoSQL = conexao.prepareStatement(sql);
-			comandoSQL.setString(1,getNome() );
+			comandoSQL.setString(1,nomeCategoria );
 			resultado = comandoSQL.executeQuery();
 			while (resultado.next()) {
 				nome = resultado.getString("nome");
+				descricao = resultado.getString("descricao");
+				trailer = resultado.getString("trailer");
 				imagem =resultado.getString("name")+"."+resultado.getString("tipo");
 				Filme x = new Filme();
 				x.setNome(nome);
 				x.setImagem(imagem);
+				x.setDescricao(descricao);
+				x.setTrailer(trailer);
 				filmes.add(x);
 			}
 		} catch (SQLException e) {
@@ -43,28 +48,39 @@ public class CategoriaDAOPostgres implements CategoriaDAO {
 		}
 		return filmes;
 	}
-
-	@Override
-	public String getNome() {
-		return nome;
-	}
-
-	@Override
-	public String getCapa() {
-		return capa;
-	}
-
-	@Override
-	public void setNome(String nome) {
-		this.nome = nome;
+	
+public ArrayList<Categorias> getCategorias(){
 		
+		Connection conexao;
+		PreparedStatement comandoSQL;
+		ResultSet resultado;
+		String nome = null,capa=null;
+		//long visualizacoes = 0;
+		ArrayList<Categorias> categorias = new ArrayList<Categorias>();
+		
+		String sql = "SELECT nome,capaimagem FROM categoria;";		
+		try {
+			conexao = BDConnection.getConnection();
+			comandoSQL = conexao.prepareStatement(sql);
+			resultado = comandoSQL.executeQuery();
+			while (resultado.next()) {
+				Categorias cat = new Categorias();
+				nome = resultado.getString("nome");
+				capa = resultado.getString("capaimagem");
+				cat.setNome(nome);
+				cat.setCapa(capa);
+				
+				
+				categorias.add(cat);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return categorias;
+			
 	}
 
-	@Override
-	public void setCapa(String capa) {
-		this.capa = capa;
-		
-	}
 	
 
 

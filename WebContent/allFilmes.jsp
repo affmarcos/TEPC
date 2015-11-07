@@ -42,7 +42,7 @@
 	<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 	
 	<%@ page import = "java.util.*"  %>	
-	<jsp:useBean id="categoria" class="classes.Categorias" scope="request"/>
+	<jsp:useBean id="filme" class="classes.Filme" scope="request"/>
 	
 
      
@@ -82,11 +82,11 @@
 <div class="grid_12">
       <h2>Categorias</h2>
     </div>
-<c:forEach var="list" items="${categoria.categorias}">
+<c:forEach var="list" items="${filme.filmes}">
     <div class="grid_3">
 		<a href="#" class="box"> <!-- seria legal completar a href dinamicamente, não sei como fazer preciso ver o teu link-->
         <div class="maxheight">
-          <img src="images/${list.capa}" alt="">
+          <img src="images/${list.imagem}" alt="">
           <div class="box_bot">
           		${list.nome}
             <!-- <span>Cleaning</span> -->

@@ -5,6 +5,11 @@
     <servlet-class>servlet.AdicionarFilme</servlet-class>
   </servlet>
   
+    <servlet-mapping>
+    <servlet-name>AdicionarFilme</servlet-name>
+    <url-pattern>/AdicionarFilme</url-pattern>
+  </servlet-mapping>
+  
     <servlet>
     <servlet-name>FilmeCategoria</servlet-name>
     <servlet-class>servlet.TestRestServlet</servlet-class>
