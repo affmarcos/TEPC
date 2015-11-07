@@ -2,7 +2,6 @@ package DAO;
 
 import java.util.ArrayList;
 
-import classes.Categorias;
 import classes.Filme;
 
 public interface FilmeDAO {
@@ -12,6 +11,6 @@ public interface FilmeDAO {
 	boolean delete(int id);
 	boolean adicionarCapa(Filme filme, String tipo, long imagem);
 	ArrayList<Filme> getFilmes();
-	
+	ArrayList<Filme> getFilme(String nomeFilme);
 
 }

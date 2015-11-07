@@ -31,11 +31,14 @@ public class Categorias extends CategoriaDAOPostgres {
 		
 	}
 	
-	public ArrayList<ArrayList<Filme>> getFilmePorCategoria(){
-		ArrayList<ArrayList<Filme>> filmePorCategoria = new ArrayList<ArrayList<Filme>>();
+	public ArrayList<CategoriaFilme> getFilmePorCategoria(){
+		ArrayList<CategoriaFilme> filmePorCategoria = new ArrayList<CategoriaFilme>();
 		ArrayList<Categorias> categoria = getCategorias();
 		for(int i=0;i<categoria.size();i++){
-			filmePorCategoria.add(getFilmcategoria(categoria.get(i).getNome()));
+			CategoriaFilme x = new CategoriaFilme();
+			x.setNomeCategoria(categoria.get(i).getNome());
+			x.setFilme(getFilmcategoria(categoria.get(i).getNome()));
+			filmePorCategoria.add(x);
 		}		
 		
 		return filmePorCategoria;
