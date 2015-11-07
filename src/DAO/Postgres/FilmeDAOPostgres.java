@@ -196,7 +196,7 @@ public class FilmeDAOPostgres implements FilmeDAO {
 		try {
 			conexao = BDConnection.getConnection();
 			comandoSQL = conexao.prepareStatement(sql);
-			comandoSQL.setString(1,nomeFilme+"%" );
+			comandoSQL.setString(1,"%"+nomeFilme+"%" );
 			resultado = comandoSQL.executeQuery();
 			while (resultado.next()) {
 				
