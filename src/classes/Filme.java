@@ -6,6 +6,7 @@ import DAO.Postgres.FilmeDAOPostgres;
 
 public class Filme extends FilmeDAOPostgres {
 	
+	private int id;
 	private String nome;
 	private String descricao;
 	private ArrayList<String> categoria;
@@ -44,6 +45,13 @@ public class Filme extends FilmeDAOPostgres {
 	}
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public Filme novoFilme(String nome,String descricao,String trailer){

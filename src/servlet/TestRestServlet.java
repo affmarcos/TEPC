@@ -1,23 +1,27 @@
 package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
- 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
- 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import classes.Categorias;
  
 public class TestRestServlet extends HttpServlet {
  
-  private class RestRequest {
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+private class RestRequest {
     // Accommodate two requests, one for all resources, another for a specific resource
-    private Pattern regExAllPattern = Pattern.compile("/resource");
+	private Pattern regExAllPattern = Pattern.compile("/resource$");
     private Pattern regExIdPattern = Pattern.compile("/resource/([0-9]*)");
- 
-    private Integer id;
  
     public RestRequest(String pathInfo) throws ServletException {
       // regex parse pathInfo
@@ -25,10 +29,10 @@ public class TestRestServlet extends HttpServlet {
  
       // Check for ID case first, since the All pattern would also match
       matcher = regExIdPattern.matcher(pathInfo);
-      if (matcher.find()) {
+      /*if (matcher.find()) {
         id = Integer.parseInt(matcher.group(1));
         return;
-      }
+      }*/
  
       matcher = regExAllPattern.matcher(pathInfo);
       if (matcher.find()) return;
@@ -36,31 +40,27 @@ public class TestRestServlet extends HttpServlet {
       throw new ServletException("Invalid URI");
     }
  
-    public Integer getId() {
-      return id;
-    }
- 
-    public void setId(Integer id) {
-      this.id = id;
-    }
   }
  
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     PrintWriter out = response.getWriter();
- 
+    Categorias categoria = new Categorias();
     out.println("GET request handling");
     String path = request.getPathInfo();
+    path = path.substring(path.lastIndexOf("/")+1,path.length());
+    categoria.getCategorias().contains(path);
+    System.out.println(path+" "+categoria.getCategorias());
     out.println(request.getPathInfo());
     out.println(request.getParameterMap());
     try {
       RestRequest resourceValues = new RestRequest(request.getPathInfo());
-      out.println(resourceValues.getId());
+      out.println("ID");
     } catch (ServletException e) {
-     /* response.setStatus(400);
+      response.setStatus(400);
       response.resetBuffer();
       e.printStackTrace();
-      out.println(e.toString());*/
+      out.println(e.toString());
     }
     out.close();
   }

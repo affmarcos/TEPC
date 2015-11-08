@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import DAO.Postgres.CategoriaDAOPostgres;
 
 public class Categorias extends CategoriaDAOPostgres {
-	
+	private int id;
 	private String nome;
 	private String capa;
 
@@ -42,5 +42,13 @@ public class Categorias extends CategoriaDAOPostgres {
 		}		
 		
 		return filmePorCategoria;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

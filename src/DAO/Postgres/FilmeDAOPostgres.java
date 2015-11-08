@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import classes.Filme;
 import util.BDConnection;
+import util.Utilidades;
 import DAO.FilmeDAO;
 
 public class FilmeDAOPostgres implements FilmeDAO {
@@ -20,13 +21,14 @@ public class FilmeDAOPostgres implements FilmeDAO {
 		
 		if(!verificaExistenciaFilme(filme.getNome())){
 		
-			String sql = "INSERT INTO filmes(nome,descricao,trailer,excluido) VALUES(?,?,?,'false')";		
+			String sql = "INSERT INTO filmes(nome,descricao,trailer,excluido,url_filme) VALUES(?,?,?,'false',?)";		
 			try {
 				conexao = BDConnection.getConnection();
 				comandoSQL = conexao.prepareStatement(sql);
 				comandoSQL.setString(1, filme.getNome());
 				comandoSQL.setString(2, filme.getDescricao());
 				comandoSQL.setString(3, filme.getTrailer());
+				comandoSQL.setString(4, Utilidades.formatoURL(filme.getNome()));
 				comandoSQL.executeUpdate();
 				
 			} catch (SQLException e) {
@@ -53,7 +55,6 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			comandoSQL.setString(3, filme.getTrailer());
 			comandoSQL.setInt(4, id);
 			comandoSQL.executeUpdate();
-			conexao.close();
 		} catch (SQLException e) {
 			return false;
 		}
@@ -85,6 +86,7 @@ public class FilmeDAOPostgres implements FilmeDAO {
 		PreparedStatement comandoSQL;
 		ResultSet resultado;
 		String nome = null, descricao = null,imagem = null,trailer = null;
+		int id = 0;
 		//long visualizacoes = 0;
 		ArrayList<Filme> filmes = new ArrayList<Filme>();
 		
@@ -94,11 +96,13 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			comandoSQL = conexao.prepareStatement(sql);
 			resultado = comandoSQL.executeQuery();
 			while (resultado.next()) {
+				id = resultado.getInt("id");
 				nome = resultado.getString("nome");
 				descricao = resultado.getString("descricao");
 				trailer = resultado.getString("trailer");
 				imagem =resultado.getString("name")+"."+resultado.getString("tipo");
 				Filme x = new Filme();
+				x.setId(id);
 				x.setNome(nome);
 				x.setImagem(imagem);
 				x.setDescricao(descricao);
@@ -191,6 +195,7 @@ public class FilmeDAOPostgres implements FilmeDAO {
 		PreparedStatement comandoSQL;
 		ResultSet resultado;
 		String descricao = null,nome=null ,imagem = null,trailer = null;
+		int id;
 		ArrayList<Filme> filmes =  new ArrayList<Filme>();;	
 		String sql = "select * FROM filmes,imagens WHERE imagens.id=filmes.id and upper(translate(filmes.nome, 'ÁÇÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕËÜáçéíóúàèìòùâêîôûãõëü','ACEIOUAEIOUAEIOUAOEUaceiouaeiouaeiouaoeu')) LIKE upper((translate(? , 'ÁÇÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕËÜáçéíóúàèìòùâêîôûãõëü','ACEIOUAEIOUAEIOUAOEUaceiouaeiouaeiouaoeu')));;";		
 		try {
@@ -199,12 +204,13 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			comandoSQL.setString(1,"%"+nomeFilme+"%" );
 			resultado = comandoSQL.executeQuery();
 			while (resultado.next()) {
-				
+				id = resultado.getInt("filmes.id");
 				nome = resultado.getString("nome");
 				descricao = resultado.getString("descricao");
 				trailer = resultado.getString("trailer");
 				imagem =resultado.getString("name")+"."+resultado.getString("tipo");
 				Filme x = new Filme();
+				x.setId(id);
 				x.setNome(nome);
 				x.setImagem(imagem);
 				x.setDescricao(descricao);
@@ -215,6 +221,24 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			return null;
 		}
 		return filmes;
+	}
+	
+	public boolean updateUrl(String url,int id) {
+		Connection conexao;
+		PreparedStatement comandoSQL;
+		
+		String sql = "Update filmes set url_filme = ? where id= ?";		
+		try {
+			conexao = BDConnection.getConnection();
+			comandoSQL = conexao.prepareStatement(sql);
+			comandoSQL.setString(1, url);
+			comandoSQL.setInt(2, id);
+			comandoSQL.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	
