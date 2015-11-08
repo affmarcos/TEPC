@@ -84,7 +84,7 @@
     </div>
 <c:forEach var="list" items="${categoria.categorias}">
     <div class="grid_3">
-		<a href="#" class="box"> <!-- seria legal completar a href dinamicamente, não sei como fazer preciso ver o teu link-->
+		<a href="/TEPC/Categoria/${list.url}" class="box"> <!-- seria legal completar a href dinamicamente, não sei como fazer preciso ver o teu link-->
         <div class="maxheight">
           <img src="images/${list.capa}" alt="">
           <div class="box_bot">

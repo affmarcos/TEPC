@@ -5,9 +5,9 @@
 
      <meta charset="utf-8">
      <meta name="format-detection" content="telephone=no" />
-     <link rel="icon" href="images/favicon.ico">
-     <link rel="shortcut icon" href="images/favicon.ico" />
-     <link rel="stylesheet" href="css/style.css">
+     <link rel="icon" href="../images/favicon.ico">
+     <link rel="shortcut icon" href="../images/favicon.ico" />
+     <link rel="stylesheet" href="../css/style.css">
      <script src="js/jquery.js"></script>
      <script src="js/jquery-migrate-1.1.1.js"></script>
      <script src="js/script.js"></script> 
@@ -42,7 +42,7 @@
 	<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 	
 	<%@ page import = "java.util.*"  %>	
-	<%@ page import = "classes.Filme"  %>	
+	<%@ page import = "classes.Filme"  %>
 	<jsp:useBean id="categoria" class="classes.Categorias" scope="request"/>
 
      
@@ -52,8 +52,8 @@
   <div class="container_12">
             <div class="grid_12">
                       <h2>
-          <a href="index.html">
-            <img src="images/logo.png" alt="Your Happy Family">
+          <a href="../index.html">
+            <img src="../images/logo.png" alt="Your Happy Family">
           </a>
         </h2>  
              
@@ -84,14 +84,15 @@
     </div>
     
     <% 
-		categoria.setNome("Corrida");  	
+    	String categoriaSelecionada =(String) request.getAttribute("nomeCategoriaAtual");
+		categoria.setNome(categoriaSelecionada);  	
     %>
-    
+    	
 <c:forEach var="list" items="${categoria.filmeDaCategoria}">
     <div class="grid_3">
-		<a href="#" class="box"> <!-- seria legal completar a href dinamicamente, não sei como fazer preciso ver o teu link-->
+		<a href="../${list.url}" class="box"> <!-- seria legal completar a href dinamicamente, não sei como fazer preciso ver o teu link-->
         <div class="maxheight">
-          <img src="images/${list.imagem}" alt="">
+          <img src="../images/${list.imagem}" alt="">
           <div class="box_bot">
           		${list.nome}
             <!-- <span>Cleaning</span> -->

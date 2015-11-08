@@ -8,6 +8,7 @@ public class Categorias extends CategoriaDAOPostgres {
 	private int id;
 	private String nome;
 	private String capa;
+	private String url;
 
 	public String getNome(){
 		return nome;
@@ -50,5 +51,13 @@ public class Categorias extends CategoriaDAOPostgres {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

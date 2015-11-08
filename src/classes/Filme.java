@@ -13,6 +13,7 @@ public class Filme extends FilmeDAOPostgres {
 	private String imagem;
 	private String trailer;
 	private long visualizacoes;
+	private String url;
 		
 	public long getVisualizacoes() {
 		return visualizacoes;
@@ -67,6 +68,12 @@ public class Filme extends FilmeDAOPostgres {
 	}
 	public void setCategoria(String categoria) {
 		this.categoria.add(categoria);
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 	

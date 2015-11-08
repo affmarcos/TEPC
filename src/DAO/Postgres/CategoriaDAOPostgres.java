@@ -54,7 +54,7 @@ public ArrayList<Categorias> getCategorias(){
 		Connection conexao;
 		PreparedStatement comandoSQL;
 		ResultSet resultado;
-		String nome = null,capa=null;
+		String nome = null,capa=null,url = null;
 		int id =0;
 		//long visualizacoes = 0;
 		ArrayList<Categorias> categorias = new ArrayList<Categorias>();
@@ -69,9 +69,11 @@ public ArrayList<Categorias> getCategorias(){
 				id = resultado.getInt("id");
 				nome = resultado.getString("nome");
 				capa = resultado.getString("capaimagem");
+				url = resultado.getString("url_categoria");
 				cat.setNome(nome);
 				cat.setCapa(capa);
 				cat.setId(id);
+				cat.setUrl(url);
 				
 				
 				categorias.add(cat);
@@ -100,6 +102,28 @@ public boolean updateUrl(String url,int id) {
 		return false;
 	}
 	return true;
+}
+
+public String buscaNomeCategoria(String url){
+	Connection conexao;
+	PreparedStatement comandoSQL;
+	ResultSet resultado;		
+	String categoria = null;
+	String sql = "SELECT nome FROM CATEGORIA where url_categoria = ?;";		
+	try {
+		conexao = BDConnection.getConnection();
+		comandoSQL = conexao.prepareStatement(sql);
+		comandoSQL.setString(1, url);
+		resultado = comandoSQL.executeQuery();
+		while(resultado.next()){
+			categoria = resultado.getString("nome");
+		}
+	} catch (SQLException e) {
+		//e.printStackTrace();
+		return categoria;
+	}
+	
+	return categoria;
 }
 	
 

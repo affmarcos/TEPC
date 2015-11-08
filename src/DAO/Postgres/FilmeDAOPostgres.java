@@ -85,7 +85,7 @@ public class FilmeDAOPostgres implements FilmeDAO {
 		Connection conexao;
 		PreparedStatement comandoSQL;
 		ResultSet resultado;
-		String nome = null, descricao = null,imagem = null,trailer = null;
+		String nome = null, descricao = null,imagem = null,trailer = null, url = null;
 		int id = 0;
 		//long visualizacoes = 0;
 		ArrayList<Filme> filmes = new ArrayList<Filme>();
@@ -100,6 +100,7 @@ public class FilmeDAOPostgres implements FilmeDAO {
 				nome = resultado.getString("nome");
 				descricao = resultado.getString("descricao");
 				trailer = resultado.getString("trailer");
+				url = resultado.getString("url_filme");
 				imagem =resultado.getString("name")+"."+resultado.getString("tipo");
 				Filme x = new Filme();
 				x.setId(id);
@@ -107,6 +108,7 @@ public class FilmeDAOPostgres implements FilmeDAO {
 				x.setImagem(imagem);
 				x.setDescricao(descricao);
 				x.setTrailer(trailer);
+				x.setUrl(url);
 				filmes.add(x);
 			}
 		} catch (SQLException e) {
