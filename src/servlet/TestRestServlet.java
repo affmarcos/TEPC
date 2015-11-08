@@ -21,63 +21,61 @@ public class TestRestServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
-private class RestRequest {
-    // Accommodate two requests, one for all resources, another for a specific resource
-	//private String filme = montaStringFilmes(),categoria = montaStringCategorias();
+	private class RestRequest {
+	    // Accommodate two requests, one for all resources, another for a specific resource
+		private String filme = montaStringFilmes(),categoria = montaStringCategorias();
 
-	//private Pattern regExCategorias = Pattern.compile("/"+categoria+"$");
-    //private Pattern regExFilme = Pattern.compile("/"+filme+"$");
- 
-    public RestRequest(String pathInfo) throws ServletException {
-      // regex parse pathInfo
-      //Matcher matcher;
- 
-      // Check for ID case first, since the All pattern would also match
-      //matcher = regExCategorias.matcher(pathInfo);
-      Categorias cat = new Categorias();
-      String nome=cat.buscaNomeCategoria(pathInfo);
-      System.out.println(cat.buscaNomeCategoria(pathInfo));
-      System.out.println(nome);
-      if (nome.equals(null)) {
-    	  throw new ServletException("Invalid URI");
-      }
- 
-    /*  matcher = regExAllPattern.matcher(pathInfo);
-      if (matcher.find()) return;
-      */
- 
- 
-    }
- 
-  }
+		private Pattern regExCategorias = Pattern.compile("/"+categoria+"$");
+	    private Pattern regExFilme = Pattern.compile("/"+filme+"$");
+	 
+	    public RestRequest(String pathInfo) throws ServletException {
+	      // regex parse pathInfo
+	      Matcher matcher;
+	 
+	      // Check for ID case first, since the All pattern would also match
+	      matcher = regExCategorias.matcher(pathInfo);
+	      Categorias cat = new Categorias();
+	      String nome=cat.buscaNomeCategoria(pathInfo);
+	      System.out.println(cat.buscaNomeCategoria(pathInfo));
+	      System.out.println(nome);
+	      if (matcher.find()) return;
+	      matcher = regExFilme.matcher(pathInfo);
+	      if (matcher.find()) return;
+	      
+	      throw new ServletException("Invalid URI");
+	 
+	 
+	    }
+	 
+	  }
 
-	protected String montaStringCategorias(){
-		ArrayList<Categorias> categorias = new Categorias().getCategorias();
-		String categoria="";
-		int atual=1;
-		if(categorias.size()>0){
-			categoria = categorias.get(0).getUrl();
-			while(atual<categorias.size()){
-				categoria= categoria+"||"+categorias.get(atual).getUrl();
-				atual++;
+		protected String montaStringCategorias(){
+			ArrayList<Categorias> categorias = new Categorias().getCategorias();
+			String categoria="";
+			int atual=1;
+			if(categorias.size()>0){
+				categoria = categorias.get(0).getUrl();
+				while(atual<categorias.size()){
+					categoria= categoria+"||"+categorias.get(atual).getUrl();
+					atual++;
+				}
 			}
+			return categoria;
 		}
-		return categoria;
-	}
-	
-	protected String montaStringFilmes(){
-		ArrayList<Filme> filmes = new Filme().getFilmes();
-		String filme="";
-		int atual=1;
-		if(filmes.size()>0){
-			filme = filmes.get(0).getUrl();
-			while(atual<filmes.size()){
-				filme= filme+"||"+filmes.get(atual).getUrl();
-				atual++;
+		
+		protected String montaStringFilmes(){
+			ArrayList<Filme> filmes = new Filme().getFilmes();
+			String filme="";
+			int atual=1;
+			if(filmes.size()>0){
+				filme = filmes.get(0).getUrl();
+				while(atual<filmes.size()){
+					filme= filme+"||"+filmes.get(atual).getUrl();
+					atual++;
+				}
 			}
+			return filme;
 		}
-		return filme;
-	}
 	
 	
  
@@ -92,7 +90,9 @@ private class RestRequest {
    // out.println(request.getPathInfo());
     //out.println(request.getParameterMap());
     try {
-    	System.out.println("Path "+path+" path info "+request.getPathInfo()+" nome categoria "+categoria.buscaNomeCategoria(path));
+        Categorias cat = new Categorias();
+        String nome=cat.buscaNomeCategoria(path);
+     	System.out.println("link "+path+" nome categoria "+categoria.buscaNomeCategoria(path));
         RestRequest resourceValues = new RestRequest(path);
         request.setAttribute("nomeCategoriaAtual", (Object) categoria.buscaNomeCategoria(path));
         RequestDispatcher rd = request.getRequestDispatcher("/filmePorcategoria.jsp" );
@@ -106,5 +106,7 @@ private class RestRequest {
     }
     out.close();
   }
- 
 }
+ 
+
+

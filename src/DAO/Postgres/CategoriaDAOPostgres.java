@@ -20,7 +20,7 @@ public class CategoriaDAOPostgres implements CategoriaDAO {
 		Connection conexao;
 		PreparedStatement comandoSQL;
 		ResultSet resultado;
-		String descricao = null,nome=null ,imagem = null,trailer = null;
+		String descricao = null,nome=null ,url = null,imagem = null,trailer = null;
 		//long visualizacoes = 0;
 		ArrayList<Filme> filmes = new ArrayList<Filme>();
 		
@@ -35,11 +35,13 @@ public class CategoriaDAOPostgres implements CategoriaDAO {
 				descricao = resultado.getString("descricao");
 				trailer = resultado.getString("trailer");
 				imagem =resultado.getString("name")+"."+resultado.getString("tipo");
+				url = resultado.getString("url_filme");
 				Filme x = new Filme();
 				x.setNome(nome);
 				x.setImagem(imagem);
 				x.setDescricao(descricao);
 				x.setTrailer(trailer);
+				x.setUrl(url);
 				filmes.add(x);
 			}
 		} catch (SQLException e) {
