@@ -28,8 +28,7 @@ public class Categoria extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("/categorias.jsp" );
-		rd.forward(request,response);
+		response.sendRedirect("/TEPC/categorias.jsp");
 	}
 
 	/**

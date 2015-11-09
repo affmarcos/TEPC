@@ -19,37 +19,10 @@ public class TestRestServlet extends HttpServlet {
   /**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 
-	private class RestRequest {
-	    // Accommodate two requests, one for all resources, another for a specific resource
-		private String filme = montaStringFilmes(),categoria = montaStringCategorias();
-
-		private Pattern regExCategorias = Pattern.compile("/"+categoria+"$");
-	    private Pattern regExFilme = Pattern.compile("/"+filme+"$");
-	 
-	    public RestRequest(String pathInfo) throws ServletException {
-	      // regex parse pathInfo
-	      Matcher matcher;
-	 
-	      // Check for ID case first, since the All pattern would also match
-	      matcher = regExCategorias.matcher(pathInfo);
-	      Categorias cat = new Categorias();
-	      String nome=cat.buscaNomeCategoria(pathInfo);
-	      System.out.println(cat.buscaNomeCategoria(pathInfo));
-	      System.out.println(nome);
-	      if (matcher.find()) return;
-	      matcher = regExFilme.matcher(pathInfo);
-	      if (matcher.find()) return;
-	      
-	      throw new ServletException("Invalid URI");
-	 
-	 
-	    }
-	 
-	  }
-
-		protected String montaStringCategorias(){
+	/*	protected String montaStringCategorias(){
 			ArrayList<Categorias> categorias = new Categorias().getCategorias();
 			String categoria="";
 			int atual=1;
@@ -77,36 +50,50 @@ public class TestRestServlet extends HttpServlet {
 			return filme;
 		}
 	
-	
+*/
  
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    PrintWriter out = response.getWriter();
-    Categorias categoria = new Categorias();
-    out.println("GET request handling");
     String path = request.getPathInfo();
     path = path.substring(path.lastIndexOf("/")+1,path.length());
     //System.out.println(path+" "+categoria.getCategorias());
    // out.println(request.getPathInfo());
     //out.println(request.getParameterMap());
     try {
-        Categorias cat = new Categorias();
-        String nome=cat.buscaNomeCategoria(path);
-     	System.out.println("link "+path+" nome categoria "+categoria.buscaNomeCategoria(path));
-        RestRequest resourceValues = new RestRequest(path);
-        request.setAttribute("nomeCategoriaAtual", (Object) categoria.buscaNomeCategoria(path));
-        RequestDispatcher rd = request.getRequestDispatcher("/filmePorcategoria.jsp" );
-        rd.forward(request, response); 
-     // out.println("ID");
-    } catch (ServletException e) {
-      response.setStatus(400);
-      response.resetBuffer();
-      e.printStackTrace();
-      out.println(e.toString());
-    }
-    out.close();
+    	Categorias cat = new Categorias();
+    	Filme fil = new Filme();
+       	String filmeOuCategoria =  buscaUrl(path, path);
+       	if(filmeOuCategoria.equals("categoria")){
+	        request.setAttribute("nomeCategoriaAtual", (Object) cat.buscaNomeCategoria(path));
+	        RequestDispatcher rd = request.getRequestDispatcher("/filmePorcategoria.jsp" );
+	        rd.forward(request, response); 
+       	}else{
+       		request.setAttribute("nomeFilmeAtual", (Object) fil.buscaNomeFilme(path));
+	        RequestDispatcher rd = request.getRequestDispatcher("/filme.jsp" );
+	        rd.forward(request, response); 
+       	}
+    } catch (NullPointerException e) {
+
+    }  catch (ServletException e) {
+        response.setStatus(400);
+        response.resetBuffer();
+        e.printStackTrace();
+      }
   }
+  
+  
+  protected String buscaUrl( String path, String nome) throws ServletException{
+	  
+	  Categorias cat = new Categorias();
+	  Filme fil = new Filme();
+	  if(cat.buscaNomeCategoria(path).length()>0) return "categoria"; //categoria
+	  if(fil.buscaNomeFilme(path).length()>0) return "filme"; //categoria
+
+	  throw new ServletException("Invalid URI");
+  }
+
 }
+
  
 
 

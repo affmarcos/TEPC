@@ -25,6 +25,11 @@
     <servlet-name>Categoria</servlet-name>
     <url-pattern>/Categoria</url-pattern>
   </servlet-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>Categoria</servlet-name>
+    <url-pattern>/Categoria/</url-pattern>
+  </servlet-mapping>
 	  
   
   <servlet-mapping>

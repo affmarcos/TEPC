@@ -114,7 +114,7 @@
   <div class="container_12">
     <div class="row">
       <div class="grid_12">  
-            <a href="#" onclick="goToByScroll('top'); return false;" class="top"></a><br> <a href="#" class="f_logo"><img src="images/f_logo.png" alt=""></a>
+            <a href="#" onclick="goToByScroll('top'); return false;" class="top"></a><br> <a href="#" class="f_logo"><img src="../images/f_logo.png" alt=""></a>
           <div class="footer_socials">
             <a href="#" class="fa fa-twitter"></a>
             <a href="#" class="fa fa-facebook"></a>

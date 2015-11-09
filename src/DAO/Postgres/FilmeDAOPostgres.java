@@ -242,6 +242,28 @@ public class FilmeDAOPostgres implements FilmeDAO {
 		}
 		return true;
 	}
+	
+	public String buscaNomeFilme(String url){
+		Connection conexao;
+		PreparedStatement comandoSQL;
+		ResultSet resultado;		
+		String filme = null;
+		String sql = "SELECT nome FROM filmes where url_filme = ?;";		
+		try {
+			conexao = BDConnection.getConnection();
+			comandoSQL = conexao.prepareStatement(sql);
+			comandoSQL.setString(1, url);
+			resultado = comandoSQL.executeQuery();
+			while(resultado.next()){
+				filme = resultado.getString("nome");
+			}
+		} catch (SQLException e) {
+			//e.printStackTrace();
+			return filme;
+		}
+		
+		return filme;
+	}
 
 	
 
