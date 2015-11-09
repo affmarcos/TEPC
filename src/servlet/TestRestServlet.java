@@ -26,6 +26,7 @@ public class TestRestServlet extends HttpServlet {
       throws ServletException, IOException {
     String path = request.getPathInfo();
     path = path.substring(path.lastIndexOf("/")+1,path.length());
+   // System.out.println(path);
     try {
     	Categorias cat = new Categorias();
     	Filme fil = new Filme();

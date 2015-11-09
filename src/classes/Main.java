@@ -13,11 +13,13 @@ public class Main {
  	public static void main(String[] args){
  		
  		Categorias x = new Categorias();
- 		//x.setNome("Corrida");
- 		ArrayList<Categorias> isso = x.getCategorias();
+ 		x.setNome("Aventura");
+ 		x.setId(1);
+		//System.out.println(x.quantidadePaginasFilmeCategoria());
+ 		ArrayList<Filme> isso = x.getFilmePorCategoriaPagina();
  		for(int i=0;i<isso.size();i++){
- 			System.out.println(isso.get(i).getId()+" "+isso.get(i).getNome());
- 			System.out.println(x.updateUrl(Utilidades.formatoURL(isso.get(i).getNome()),isso.get(i).getId()));
+ 			System.out.println(isso.get(i).getNome()+" "+isso.get(i).getUrl());
+ 			//System.out.println(x.updateUrl(Utilidades.formatoURL(isso.get(i).getNome()),isso.get(i).getId()));
  		}
  		
  		//ArrayList<Filme> j = x.getFilmcategoria("Corrida");

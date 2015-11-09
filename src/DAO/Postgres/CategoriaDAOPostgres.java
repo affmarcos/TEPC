@@ -127,6 +127,59 @@ public String buscaNomeCategoria(String url){
 	
 	return categoria;
 }
+
+public int quantidadeFilmeCategoria(String categoria){
+	Connection conexao;
+	PreparedStatement comandoSQL;
+	ResultSet resultado;		
+	int quantidade=0;
+	String sql = "SELECT COUNT(*) AS c FROM FILMES WHERE categoria = ?;";		
+	try {
+		conexao = BDConnection.getConnection();
+		comandoSQL = conexao.prepareStatement(sql);
+		comandoSQL.setString(1, categoria);
+		resultado = comandoSQL.executeQuery();
+		resultado.next();
+		quantidade = resultado.getInt("c");
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	return quantidade;
+	
+}
+
+public ArrayList<Filme> buscaFilmePaginacao(int quantidade, int pagina, String nomeCategoria){
+	Connection conexao;
+	PreparedStatement comandoSQL;
+	ResultSet resultado;		
+	String imagem = null,nome = null, url;
+	ArrayList<Filme> filmes = new ArrayList<Filme>();
+	String sql = "SELECT * FROM filmes,categoria,imagens,categoria_filme WHERE categoria_filme.id_categoria=categoria.id and categoria_filme.id_filme=filmes.id and imagens.id=filmes.id and categoria.nome=? LIMIT ? offset ? ;";		
+	try {
+		conexao = BDConnection.getConnection();
+		comandoSQL = conexao.prepareStatement(sql);
+		comandoSQL.setInt(3, quantidade);
+		comandoSQL.setInt(2, pagina);
+		comandoSQL.setString(1, nomeCategoria );
+		resultado = comandoSQL.executeQuery();
+		while(resultado.next()){
+			nome = resultado.getString("nome");
+			imagem = resultado.getString("name")+"."+resultado.getString("tipo");
+			url = resultado.getString("url_filme");
+			Filme x = new Filme();
+			x.setNome(nome);
+			x.setImagem(imagem);
+			x.setUrl(url);
+			filmes.add(x);
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+		return filmes;
+	}
+	
+	return filmes;
+}
 	
 
 

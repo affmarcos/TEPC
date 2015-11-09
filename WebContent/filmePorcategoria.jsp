@@ -63,7 +63,7 @@
   <div class="menu_block">
     <nav class="horizontal-nav full-width horizontalNav-notprocessed">
       <ul class="sf-menu">
-       <li><a href="index.html">Inicial</a></li>
+       <li><a href="../index.html">Inicial</a></li>
        <li class="current"><a href="index-1.html">Categorias</a></li>
        <li><a href="index-2.html">Fale Conosco</a></li>
        <li><a href="index-3.html">Sobre</a></li>
@@ -84,11 +84,18 @@
     </div>
     
     <% 
-    	String categoriaSelecionada =(String) request.getAttribute("nomeCategoriaAtual");
-		categoria.setNome(categoriaSelecionada);  	
+    
+     String categoriaSelecionada =(String) request.getAttribute("nomeCategoriaAtual"); 	
+	 String pagina = request.getParameter("pagina"); // página atual
+	 int total_rows = categoria.quantidadePaginasFilmeCategoria(), limit=10;
+	 if(pagina == null){
+	    pagina = "1";
+	 }
+	 categoria.setNome(categoriaSelecionada); 
+	 categoria.setId(Integer.parseInt(pagina));
     %>
     	
-<c:forEach var="list" items="${categoria.filmeDaCategoria}">
+<c:forEach var="list" items="${categoria.filmePorCategoriaPagina}">
     <div class="grid_3">
 		<a href="../${list.url}" class="box"> <!-- seria legal completar a href dinamicamente, nÃ£o sei como fazer preciso ver o teu link-->
         <div class="maxheight">
@@ -102,6 +109,7 @@
 </c:forEach>
 
     
+ 
     <div class="clear"></div>
   </div>
 </section>
