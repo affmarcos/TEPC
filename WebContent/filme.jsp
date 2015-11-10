@@ -20,7 +20,11 @@
 
      </script>
 
-
+     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+	
+	<%@ page import = "java.util.*"  %>	
+	<%@ page import = "classes.Filme"  %>
     <jsp:useBean id="filme" class="classes.Filme" scope="request"/>
    
     <!--[if lt IE 8]>
@@ -67,10 +71,11 @@
 </header>  
 
 <%String filmeSelecionado =(String) request.getAttribute("nomeFilmeAtual");  
-  out.print(filmeSelecionado);
-  filme.setUrl(filmeSelecionado);
-  //filme = filme.getFilme(filmeSelecionado).get(0);
-
+  filme.setNome(filmeSelecionado);
+  filme = filme.getFilmePor();
+  Filme fil = new Filme();
+  fil.setNome(filmeSelecionado);
+  String imagemAtual = filme.getImagem();
 %>
 
 <!--=====================Content======================-->
@@ -85,11 +90,11 @@
 		
 	
 		<div class="grid_3">
-			<a href="#" class="box">
+			<a href="../${fil.imagem }" class="box">
 				<div class="maxheight">
-					<img src="../images/${filme.imagem}" alt="Carregar imagem da capa">
+					<img src="../images/<%out.println(imagemAtual); %>" alt="Carregar Imagem" height = "270" width = "395">
 						<div class="box_bot">
-							<p>${filme.trailer}</p>
+							<p>${filme.nome }</p>
 						</div>
 				</div>
 			</a>
@@ -101,7 +106,7 @@
 					<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
 				</div>
 			
-				<p>${filme.descricao}
+				<p><%  out.println(filme.getDescricao()); %>
 
 		</div>
 	  

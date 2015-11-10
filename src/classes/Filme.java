@@ -69,6 +69,10 @@ public class Filme extends FilmeDAOPostgres {
 	public void setCategoria(String categoria) {
 		this.categoria.add(categoria);
 	}
+	
+	public Filme getFilmePor(){
+		return getFilmePorNome(getNome());
+	}
 	public String getUrl() {
 		return url;
 	}
