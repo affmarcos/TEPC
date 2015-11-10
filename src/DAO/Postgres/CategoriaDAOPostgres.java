@@ -124,6 +124,10 @@ public String buscaNomeCategoria(String url){
 		//e.printStackTrace();
 		return categoria;
 	}
+	catch (NullPointerException e) {
+		//e.printStackTrace();
+		return "erro";
+	}
 	
 	return categoria;
 }

@@ -97,7 +97,7 @@
     	
 <c:forEach var="list" items="${categoria.filmePorCategoriaPagina}">
     <div class="grid_3">
-		<a href="../${list.url}" class="box"> <!-- seria legal completar a href dinamicamente, não sei como fazer preciso ver o teu link-->
+		<a href="${list.url}" class="box"> <!-- seria legal completar a href dinamicamente, não sei como fazer preciso ver o teu link-->
         <div class="maxheight">
           <img  alt="" height = "270" width = "395" src="../images/${list.imagem}" >
           <div class="box_bot">

@@ -5,9 +5,9 @@
 
      <meta charset="utf-8">
      <meta name="format-detection" content="telephone=no" />
-     <link rel="icon" href="images/favicon.ico">
-     <link rel="shortcut icon" href="images/favicon.ico" />
-     <link rel="stylesheet" href="css/style.css">
+     <link rel="icon" href="../images/favicon.ico">
+     <link rel="shortcut icon" href="../images/favicon.ico" />
+     <link rel="stylesheet" href="../css/style.css">
      <script src="js/jquery.js"></script>
      <script src="js/jquery-migrate-1.1.1.js"></script>
      <script src="js/script.js"></script> 
@@ -21,7 +21,7 @@
      </script>
 
 
-        
+    <jsp:useBean id="filme" class="classes.Filme" scope="request"/>
    
     <!--[if lt IE 8]>
        <div style=' clear: both; text-align:center; position: relative;'>
@@ -44,8 +44,8 @@
   <div class="container_12">
             <div class="grid_12">
                       <h2>
-          <a href="index.html">
-            <img src="images/logo.png" alt="Your Happy Family">
+          <a href="../index-1.html">
+            <img src="../images/logo.png" alt="Your Happy Family">
           </a>
         </h2>  
              
@@ -55,16 +55,23 @@
   <div class="menu_block">
     <nav class="horizontal-nav full-width horizontalNav-notprocessed">
       <ul class="sf-menu">
-       <li><a href="index.html">Inicial</a></li>
+       <li><a href="../index.html">Inicial</a></li>
        <li class="current"><a href="index-1.html">Categorias</a></li>
-       <li><a href="index-2.html">Fale Conosco</a></li>
-       <li><a href="index-3.html">Sobre</a></li>
-       <a href="index-4.html"></a></li>
+       <li><a href="../index-2.html">Fale Conosco</a></li>
+       <li><a href="../index-3.html">Sobre</a></li>
+       <a href="../index-4.html"></a></li>
      </ul>
     </nav>
     <div class="clear"></div>       
   </div>
 </header>  
+
+<%String filmeSelecionado =(String) request.getAttribute("nomeFilmeAtual");  
+  out.print(filmeSelecionado);
+  filme.setUrl(filmeSelecionado);
+  //filme = filme.getFilme(filmeSelecionado).get(0);
+
+%>
 
 <!--=====================Content======================-->
 <section class="content">
@@ -72,7 +79,7 @@
 
 	<div class="container_12">
 		<div class="grid_12">
-			<h1>filme.nome</h1>
+			<h1>${filme.nome}</h1>
 		</div>
 			
 		
@@ -80,21 +87,21 @@
 		<div class="grid_3">
 			<a href="#" class="box">
 				<div class="maxheight">
-					<img src="images/page1_img1.jpg" alt="Carregar imagem da capa">
+					<img src="../images/${filme.imagem}" alt="Carregar imagem da capa">
 						<div class="box_bot">
-							<p>filme.trailer</p>
+							<p>${filme.trailer}</p>
 						</div>
 				</div>
 			</a>
 		</div>
 	 
 		<div class="grid_6">
-				<h2>filme.nome</h2>
+				<h2>${filme.nome}</h2>
 				<div class="rating">
 					<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
 				</div>
 			
-				<p>filme.descricao
+				<p>${filme.descricao}
 
 		</div>
 	  
@@ -121,7 +128,7 @@
   <div class="container_12">
     <div class="row">
       <div class="grid_12">  
-            <a href="#" onclick="goToByScroll('top'); return false;" class="top"></a><br> <a href="#" class="f_logo"><img src="images/f_logo.png" alt=""></a>
+            <a href="#" onclick="goToByScroll('top'); return false;" class="top"></a><br> <a href="#" class="f_logo"><img src="../images/f_logo.png" alt=""></a>
           <div class="footer_socials">
             <a href="#" class="fa fa-twitter"></a>
             <a href="#" class="fa fa-facebook"></a>

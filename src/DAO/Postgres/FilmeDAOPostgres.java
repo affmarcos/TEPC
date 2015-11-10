@@ -260,6 +260,9 @@ public class FilmeDAOPostgres implements FilmeDAO {
 		} catch (SQLException e) {
 			//e.printStackTrace();
 			return filme;
+		}catch (NullPointerException e) {
+			//e.printStackTrace();
+			return "erro";
 		}
 		
 		return filme;

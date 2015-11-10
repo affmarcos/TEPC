@@ -4,41 +4,28 @@
     <servlet-name>AdicionarFilme</servlet-name>
     <servlet-class>servlet.AdicionarFilme</servlet-class>
   </servlet>
-  
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>AdicionarFilme</servlet-name>
     <url-pattern>/AdicionarFilme</url-pattern>
   </servlet-mapping>
-  
-    <servlet>
+  <servlet>
     <servlet-name>FilmeCategoria</servlet-name>
     <servlet-class>servlet.TestRestServlet</servlet-class>
   </servlet>
-  
-  
-      <servlet>
-      	<servlet-name>Categoria</servlet-name>
-    	<servlet-class>servlet.Categoria</servlet-class>
-  	 </servlet>
-  	 
+  <servlet>
+    <servlet-name>Categoria</servlet-name>
+    <servlet-class>servlet.Categoria</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Categoria</servlet-name>
     <url-pattern>/Categoria</url-pattern>
   </servlet-mapping>
-  
-   <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>Categoria</servlet-name>
     <url-pattern>/Categoria/</url-pattern>
   </servlet-mapping>
-	  
-  
   <servlet-mapping>
     <servlet-name>FilmeCategoria</servlet-name>
     <url-pattern>/Categoria/*</url-pattern>
   </servlet-mapping>
-  
-  
-  
-  
-  
 </web-app>
