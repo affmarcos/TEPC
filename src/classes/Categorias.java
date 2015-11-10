@@ -46,7 +46,7 @@ public class Categorias extends CategoriaDAOPostgres {
 	}
 	
 	public ArrayList<Filme> getFilmePorCategoriaPagina(){
-		return buscaFilmePaginacao(getId(),12,getNome());
+		return buscaFilmePaginacao(12,getId(),getNome());
 	}
 	
 	public int quantidadePaginasFilmeCategoria(){

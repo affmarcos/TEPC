@@ -64,10 +64,10 @@
     <nav class="horizontal-nav full-width horizontalNav-notprocessed">
       <ul class="sf-menu">
        <li><a href="../index.html">Inicial</a></li>
-       <li class="current"><a href="index-1.html">Categorias</a></li>
-       <li><a href="index-2.html">Fale Conosco</a></li>
-       <li><a href="index-3.html">Sobre</a></li>
-       <a href="index-4.html"></a></li>
+       <li class="current"><a href="../categorias.jsp">Categorias</a></li>
+       <li><a href="../index-2.html">Fale Conosco</a></li>
+       <li><a href="../index-3.html">Sobre</a></li>
+       <a href="../index-4.html"></a></li>
      </ul>
     </nav>
     <div class="clear"></div>       
@@ -87,7 +87,7 @@
     
      String categoriaSelecionada =(String) request.getAttribute("nomeCategoriaAtual"); 	
 	 String pagina = request.getParameter("pagina"); // página atual
-	 int total_rows = categoria.quantidadePaginasFilmeCategoria(), limit=10;
+	 int total_rows = categoria.quantidadePaginasFilmeCategoria(), limit=12;
 	 if(pagina == null){
 	    pagina = "1";
 	 }
@@ -99,7 +99,7 @@
     <div class="grid_3">
 		<a href="../${list.url}" class="box"> <!-- seria legal completar a href dinamicamente, nÃ£o sei como fazer preciso ver o teu link-->
         <div class="maxheight">
-          <img src="../images/${list.imagem}" alt="">
+          <img  alt="" height = "270" width = "395" src="../images/${list.imagem}" >
           <div class="box_bot">
           		${list.nome}
             <!-- <span>Cleaning</span> -->
@@ -108,7 +108,6 @@
       </a></div>
 </c:forEach>
 
-    
  
     <div class="clear"></div>
   </div>

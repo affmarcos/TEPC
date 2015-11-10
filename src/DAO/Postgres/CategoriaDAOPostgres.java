@@ -159,9 +159,9 @@ public ArrayList<Filme> buscaFilmePaginacao(int quantidade, int pagina, String n
 	try {
 		conexao = BDConnection.getConnection();
 		comandoSQL = conexao.prepareStatement(sql);
-		comandoSQL.setInt(3, quantidade);
-		comandoSQL.setInt(2, pagina);
 		comandoSQL.setString(1, nomeCategoria );
+		comandoSQL.setInt(2, quantidade);
+		comandoSQL.setInt(3, (pagina*quantidade-quantidade));
 		resultado = comandoSQL.executeQuery();
 		while(resultado.next()){
 			nome = resultado.getString("nome");
