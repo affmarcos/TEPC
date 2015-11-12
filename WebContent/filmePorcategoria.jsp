@@ -87,7 +87,7 @@
     
      String categoriaSelecionada =(String) request.getAttribute("nomeCategoriaAtual"); 	
 	 String pagina = request.getParameter("pagina"); // página atual
-	 int total_rows = categoria.quantidadePaginasFilmeCategoria(), limit=12;
+	 int limit=12;
 	 if(pagina == null){
 	    pagina = "1";
 	 }
@@ -97,24 +97,51 @@
     	
 <c:forEach var="list" items="${categoria.filmePorCategoriaPagina}">
     <div class="grid_3">
-		<a href="${list.url}" class="box"> <!-- seria legal completar a href dinamicamente, nÃ£o sei como fazer preciso ver o teu link-->
-        <div class="maxheight">
-          <img  alt="" height = "270" width = "395" src="../images/${list.imagem}" >
+		<a href="/TEPC/Filme/${list.url}" class="box"> <!-- seria legal completar a href dinamicamente, nÃ£o sei como fazer preciso ver o teu link-->
+         <div class="maxheight">
+          <img   src="../images/${list.imagem}"height = "271" width = "385" alt="" >
           <div class="box_bot">
+          	<div class="fonte">
           		${list.nome}
+          		</div>
             <!-- <span>Cleaning</span> -->
           </div>
         </div>
       </a></div>
 </c:forEach>
 
- 
-    <div class="clear"></div>
-  </div>
+<div class="clear"></div>
+<div class="conteiner center">
+	
+
+<%
+int anterior;
+if(Integer.parseInt(pagina) != 1){  
+  anterior = Integer.parseInt(pagina) - 1; 
+  out.println("<a href=?pagina=" + anterior + ">" + anterior + " Anterior</a>");
+}
+else 
+  out.println("Anterior ");
+int total_rows = categoria.quantidadePaginasFilmeCategoria();
+int numOfPages = total_rows / limit;  
+int i;
+
+int proxima = Integer.parseInt(pagina);
+if(proxima<numOfPages){ 
+  proxima = Integer.parseInt(pagina) + 1; 
+        
+  out.println("<a href=?pagina=" + proxima + ">Próximo " + proxima +"</a>");  
+}
+  
+%>
+</div>
+
+
+</div>
 </section>
 <!--==============================Bot_block=================================-->
 <!--==============================footer=================================-->
-<div class="fb-comments" data-href="http://developers.facebook.com/docs/plugins/comments/" data-width="350" data-numposts="3"></div>
+
 
 
 <footer> 
@@ -127,6 +154,9 @@
             <a href="#" class="fa fa-facebook"></a>
             <a href="#" class="fa fa-google-plus"></a>
             <a href="#" class="fa fa-instagram"></a>
+            
+            
+            
           </div>
           <div class="copy"><span class="brand">RecoMoo </span>  &copy; <span id="copyright-year"></span>  | <a href="#">Privacy Policy</a> 
             <div class="sub_copy">Website designed by ExtremeGoHorseCorporation</div>

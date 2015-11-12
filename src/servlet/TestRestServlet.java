@@ -26,29 +26,17 @@ public class TestRestServlet extends HttpServlet {
       throws ServletException, NullPointerException, IOException {
     String path = request.getPathInfo();
     path = path.substring(path.lastIndexOf("/")+1,path.length());
-    //System.out.println(path);
-    	Categorias cat = new Categorias();
-    	//Filme fil = new Filme();
-       	String filmeOuCategoria =  cat.buscaNomeCategoria(path);
-       	if(!(filmeOuCategoria==null)){
-	       	//System.out.println("CATEGORIA"+ filmeOuCategoria);
-		    request.setAttribute("nomeCategoriaAtual", (Object) cat.buscaNomeCategoria(path));
-		    RequestDispatcher rd = request.getRequestDispatcher("/filmePorcategoria.jsp" );
-		    rd.forward(request, response); 
-       	} else{
-       	Filme fil = new Filme();
-  	   	String filme = fil.buscaNomeFilme(path);
-	  		if(!(filme==null)){
-		   		//System.out.println("FILME" +path);
-		   	 	request.setAttribute("nomeFilmeAtual", (Object) fil.buscaNomeFilme(path));
-		        RequestDispatcher rd = request.getRequestDispatcher("/filme.jsp" );
-		        rd.forward(request, response); 
-	  		}else{
-	  			response.sendRedirect("/index-1.html");
-	  		}
-       	}
-
-  }
+    Categorias cat = new Categorias();
+    String filmeOuCategoria =  cat.buscaNomeCategoria(path);
+  	if(!(filmeOuCategoria==null)){
+  		//System.out.println("CATEGORIA"+ filmeOuCategoria);
+  		request.setAttribute("nomeCategoriaAtual", (Object) cat.buscaNomeCategoria(path));
+		RequestDispatcher rd = request.getRequestDispatcher("/filmePorcategoria.jsp" );
+		rd.forward(request, response); 
+    } else{
+	  		response.sendRedirect("/erro.jsp");
+	  	}
+  	}
   
 }
 

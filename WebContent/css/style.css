@@ -408,6 +408,11 @@ header h1 a img {
     margin-bottom: 25px;
 }
 
+.fonte{
+	font-size: 50%;
+	
+}
+
 .box:hover {
     background-color: #1d1d1d;
 }

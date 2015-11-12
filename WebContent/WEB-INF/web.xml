@@ -8,10 +8,7 @@
     <servlet-name>AdicionarFilme</servlet-name>
     <url-pattern>/AdicionarFilme</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>FilmeCategoria</servlet-name>
-    <servlet-class>servlet.TestRestServlet</servlet-class>
-  </servlet>
+  
   <servlet>
     <servlet-name>Categoria</servlet-name>
     <servlet-class>servlet.Categoria</servlet-class>
@@ -24,8 +21,22 @@
     <servlet-name>Categoria</servlet-name>
     <url-pattern>/Categoria/</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>FilmeCategoria</servlet-name>
+    <servlet-class>servlet.TestRestServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>FilmeCategoria</servlet-name>
     <url-pattern>/Categoria/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>FilmeServlet</servlet-name>
+    <servlet-class>servlet.FilmeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FilmeServlet</servlet-name>
+    <url-pattern>/Filme/*</url-pattern>
   </servlet-mapping>
 </web-app>
