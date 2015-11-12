@@ -18,6 +18,15 @@
      <script>
     function goToByScroll(id){$('html,body').animate({scrollTop: $("#"+id).offset().top},'slow');}
      </script>
+     
+     <script>
+	function stripHTML() {
+	var re= /<\(S[^><]*>/g;
+	for (i=0; i < arguments.length; i++) {
+			arguments[i].value=arguments[i].value.replace(re, "");
+													 }
+		 return false; }
+	</script>
         
    
     <!--[if lt IE 8]>
@@ -84,12 +93,12 @@
     </div>
     <div class="grid_6 prefix_1">
       <h3>Feedback</h3>
-      <form id="form">                            
+      <form id="form" onClick="stripHTML(this.form.nome,this.form.email,this.form.mensagem)">                            
       <div class="success_wrapper">
       <div class="success-message">Contact form submitted</div>
       </div>
       <label class="name">
-      <input type="text" name= "nome" placeholder="Nonme:" data-constraints="@Required @JustLetters" />
+      <input type="text" name= "nome" placeholder="Nome:" data-constraints="@Required @JustLetters" />
       <span class="empty-message">*This field is required.</span>
       <span class="error-message">*This is not a valid name.</span>
       </label>    

@@ -40,7 +40,7 @@ public class FilmeServlet extends HttpServlet {
 		        RequestDispatcher rd = request.getRequestDispatcher("/filme.jsp" );
 		        rd.forward(request, response); 
 	  		}else{
-	  			response.sendRedirect("/erro.jsp");
+	  			response.sendRedirect("/TEPC/erro.jsp");
 	  		}
 	}
 
