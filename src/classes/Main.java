@@ -12,7 +12,7 @@ import DAO.Postgres.ImagemPostgres;
 public class Main {
  	public static void main(String[] args){
  		
- 		Categorias x = new Categorias();
+ 		/*Categorias x = new Categorias();
  		x.setNome("Aventura");
  		x.setId(1);
 		//System.out.println(x.quantidadePaginasFilmeCategoria());
@@ -20,8 +20,14 @@ public class Main {
  		for(int i=0;i<isso.size();i++){
  			System.out.println(isso.get(i).getNome()+" "+isso.get(i).getUrl());
  			//System.out.println(x.updateUrl(Utilidades.formatoURL(isso.get(i).getNome()),isso.get(i).getId()));
- 		}
+ 		}*/
  		
+ 		Usuario x = new Usuario();
+ 		x.setEmail("cabral.mpa@gmail.com");
+ 		x.setNome("Marcos Azeredo");
+ 		x.setSenha("123456");
+ 		//x.cadastrarUsuario(x);
+ 		System.out.println(x.getUsuario(x.getEmail()).getNome());
  		//ArrayList<Filme> j = x.getFilmcategoria("Corrida");
  		//System.out.println(j);
  

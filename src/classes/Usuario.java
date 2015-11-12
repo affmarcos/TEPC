@@ -1,14 +1,12 @@
 package classes;
 
-import java.util.Calendar;
-import java.util.Date;
+import DAO.Postgres.UsuarioDAOPostgres;
 
 
-public class Usuario {
+public class Usuario extends UsuarioDAOPostgres {
 	
 	private String nome;
-	private int idade;
-	private Calendar data;
+	private String senha;
 	private String email;
 	
 	
@@ -19,18 +17,13 @@ public class Usuario {
 		this.nome = nome;
 	}
 	
-	public int getIdade() {
-		return idade;
+	public String getSenha() {
+		return senha;
 	}
-	public void setIdade(int idade) {
-		this.idade = idade;
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
-	public Date getData() {
-		return data.getTime();
-	}
-	public void setData(Calendar data) {
-		this.data = data;
-	}
+
 	public String getEmail() {
 		return email;
 	}
