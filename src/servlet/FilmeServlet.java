@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,6 +38,8 @@ public class FilmeServlet extends HttpServlet {
 	  		if(!(filme==null)){
 		   		//System.out.println("FILME" +path);
 		   	 	request.setAttribute("nomeFilmeAtual", (Object) fil.buscaNomeFilme(path));
+		   	 	//ArrayList<Filme> isso = fil.getRecomendados();
+		   	 	//request.setAttribute("recomendados", (Object) isso);
 		        RequestDispatcher rd = request.getRequestDispatcher("/filme.jsp" );
 		        rd.forward(request, response); 
 	  		}else{

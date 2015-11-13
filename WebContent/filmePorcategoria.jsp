@@ -63,11 +63,11 @@
   <div class="menu_block">
     <nav class="horizontal-nav full-width horizontalNav-notprocessed">
       <ul class="sf-menu">
-       <li><a href="../index.html">Inicial</a></li>
-       <li class="current"><a href="../categorias.jsp">Categorias</a></li>
-       <li><a href="../index-2.html">Fale Conosco</a></li>
-       <li><a href="../index-3.html">Sobre</a></li>
-       <a href="../index-4.html"></a></li>
+       <li><a href="/TEPC/index.html">Inicial</a></li>
+       <li class="current"><a href="/TEPC/categorias.jsp">Categorias</a></li>
+       <li><a href="/TEPC/formulario.jsp"> Cadastro de Filme </a></li>
+       <li><a href="/TEPC/contato.html">Fale Conosco</a></li>
+       <li><a href="/TEPC/sobre.html">Sobre</a></li>
      </ul>
     </nav>
     <div class="clear"></div>       

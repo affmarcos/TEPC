@@ -164,6 +164,7 @@ public class AdicionarFilme extends HttpServlet {
         PrintWriter out = response.getWriter();
        // boolean valida = extensao.matches("(BMP|jpeg|WBMP|GIF|bmp|jpg|JPG|wbmp|png|PNG|JPEG|gif|tiff)$");
         out.println(nome +" "+ descricao +" "+ categorias +" "+ trailer + " "+nomeArquivo+" "+ extensao );
+        System.out.println(nome +" "+ descricao +" "+ categorias +" "+ trailer + " "+nomeArquivo+" "+ extensao);
        //getServletContext().getRequestDispatcher("/formulario.jsp").forward(
        //        request, response);
     }

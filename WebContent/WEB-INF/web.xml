@@ -39,4 +39,14 @@
     <servlet-name>FilmeServlet</servlet-name>
     <url-pattern>/Filme/*</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AdicionarUsuario</servlet-name>
+    <servlet-class>servlet.AdicionarUsuario</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+    <servlet-name>AdicionarUsuario</servlet-name>
+    <url-pattern>/AdicionarUsuario</url-pattern>
+  </servlet-mapping>
 </web-app>

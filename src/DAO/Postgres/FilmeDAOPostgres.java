@@ -32,6 +32,7 @@ public class FilmeDAOPostgres implements FilmeDAO {
 				comandoSQL.executeUpdate();
 				
 			} catch (SQLException e) {
+				e.printStackTrace();
 				return false;
 			}
 			return true;
@@ -303,6 +304,40 @@ public class FilmeDAOPostgres implements FilmeDAO {
 			return null;
 		}
 		return x;
+		
+	}
+	
+	public ArrayList<Filme> getRecomendados(){
+		Connection conexao;
+		PreparedStatement comandoSQL;
+		ResultSet resultado;
+		String descricao = null,nome=null ,imagem = null,trailer = null, url=null;
+		int id;
+		ArrayList<Filme> filmes =  new ArrayList<Filme>();;	
+		String sql = "select * FROM filmes ,imagens WHERE filmes.id=imagens.id order by random() limit 2 ;";		
+		try {
+			conexao = BDConnection.getConnection();
+			comandoSQL = conexao.prepareStatement(sql);
+			resultado = comandoSQL.executeQuery();
+			while (resultado.next()) {
+				nome = resultado.getString("nome");
+				descricao = resultado.getString("descricao");
+				trailer = resultado.getString("trailer");
+				imagem =resultado.getString("name")+"."+resultado.getString("tipo");
+				url = resultado.getString("url_filme");
+				Filme x = new Filme();
+				x.setNome(nome);
+				x.setImagem(imagem);
+				x.setDescricao(descricao);
+				x.setTrailer(trailer);
+				x.setUrl(url);
+				filmes.add(x);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return filmes;
 		
 	}
 	

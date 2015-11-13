@@ -59,11 +59,11 @@
   <div class="menu_block">
     <nav class="horizontal-nav full-width horizontalNav-notprocessed">
       <ul class="sf-menu">
-       <li><a href="../index.html">Inicial</a></li>
-       <li class="current"><a href="index-1.html">Categorias</a></li>
-       <li><a href="../index-2.html">Fale Conosco</a></li>
-       <li><a href="../index-3.html">Sobre</a></li>
-       <a href="../index-4.html"></a></li>
+       <li><a href="/TEPC/index.html">Inicial</a></li>
+       <li><a href="/TEPC/categorias.jsp">Categorias</a></li>
+       <li><a href="/TEPC/formulario.jsp"> Cadastro de Filme </a></li>
+       <li><a href="/TEPC/contato.html">Fale Conosco</a></li>
+       <li><a href="/TEPC/sobre.html">Sobre</a></li>
      </ul>
     </nav>
     <div class="clear"></div>       
@@ -103,7 +103,6 @@
 		<div class="grid_6">
 				<h2>${filme.nome}</h2>
 				<div class="rating">
-					<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
 				</div>
 			
 				<p><%  out.println(filme.getDescricao()); %>
@@ -111,7 +110,7 @@
 		</div>
 	  
 		<div class="grid_3">
-			<p>Titulo: filme.nome
+			<p>Titulo: <%out.print(filme.getNome());%>
 			<br/>
 			<p> Diretor: filme.diretor
 			<br/>
@@ -120,13 +119,29 @@
 			<p>Atores: filme.ator
 			<br/>
 			<p>
-
 		</div>	
+													<h2> Recomendados</h2>
+	<c:forEach var="list" items="${filme.recomendados}">
+    <div class="grid_3">
+		<a href="/TEPC/Filme/${list.url}" class="box"> <!-- seria legal completar a href dinamicamente, não sei como fazer preciso ver o teu link-->
+         <div class="maxheight">
+          <img   src="../images/${list.imagem}" height = "271" width = "385" alt="" >
+          <div class="box_bot">
+          	<div class="fonte">
+          		${list.nome}
+          		</div>
+            <!-- <span>Cleaning</span> -->
+          </div>
+        </div>
+      </a></div>
+</c:forEach>	
 	</div>
+	
+		<div class="grid_12_center">
+		</div>
 </section>
-<!--==============================Bot_block=================================-->
+
 <!--==============================footer=================================-->
-<div class="fb-comments" data-href="http://developers.facebook.com/docs/plugins/comments/" data-width="350" data-numposts="3"></div>
 
 
 <footer> 

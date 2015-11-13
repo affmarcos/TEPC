@@ -18,6 +18,15 @@
      <script>
     function goToByScroll(id){$('html,body').animate({scrollTop: $("#"+id).offset().top},'slow');}
      </script>
+     
+    <script>
+	function stripHTML() {
+	var re= /<\(S[^><]*>/g;
+	for (i=0; i < arguments.length; i++) {
+			arguments[i].value=arguments[i].value.replace(re, "");
+													 }
+		 return false; }
+	</script>
         
    
     <!--[if lt IE 8]>
@@ -52,9 +61,10 @@
     <nav class="horizontal-nav full-width horizontalNav-notprocessed">
       <ul class="sf-menu">
        <li><a href="index.html">Inicial</a></li>
-       <li><a href="index-1.html">Categorias</a></li>
-       <li><a href="index-2.html">Fale Conosco</a></li>
-       <li><a href="index-3.html">Sobre</a></li>
+       <li><a href="categorias.jsp">Categorias</a></li>
+       <li class="current"><a href="formulario.jsp"> Cadastro de Filme </a></li>
+       <li><a href="contato.html">Fale Conosco</a></li>
+       <li><a href="sobre.html">Sobre</a></li>
        <li class="current"><a href="index-4.html"></a></li>
      </ul>
     </nav>
@@ -65,7 +75,6 @@
 <!--=====================Content======================-->
 <section class="content">
 	<!--<div class="ic">More Website Templates @ TemplateMonster.com - May 19, 2014!</div>-->
-  <div class="container_12">
 <!--
     <div class="grid_5">
  
@@ -85,23 +94,23 @@
           </div>
     </div>
 -->
+
+<div class="container_12">                        
+<form action="/TEPC/AdicionarFilme" method="post" enctype="multipart/form-data" >
     <div class="grid_8">
-      <h3>Cadastro Filme</h3>
-      <form action="/TEPC/AdicionarFilme" method="post" enctype="multipart/form-data">                            
-      <div class="success_wrapper">
-      <div class="success-message">Cadastro realizado!</div>
-    </div>
+      <h3>Cadastro Filme</h3>    
+      </div>
 	
 	<div class="grid_8">
       <label class="name">
-      <input type="text" name="name" placeholder="Name" />
+      <input type="text" name="name" pattern="[a-zA-Z\s]*" placeholder="Name" />
       
       </label>
     </div>
 	
 	<div class="grid_8">
       <label class="categoria">
-      <input type="text" name="categoria" placeholder="Categoria" />
+      <input type="text" name="categoria" pattern="[a-zA-Z\s]*" placeholder="Categoria" />
       
       </label>
     </div>
@@ -127,6 +136,12 @@
      
       </label>
     </div>
+   
+    <div class="grid_8">
+    <button type="submit" value="Submit">Submit</button>
+   </div>
+        </form>
+  </div>
 
 <!--
       <label class="message">
@@ -136,19 +151,6 @@
       </label>
 -->	
 
-<div class="grid_8">
-      
-      <div class="clear"></div>
-      <div class="btns">
-      <a href="#" data-type="reset" class="link1">Limpar</a>
-      <a href="/TEPC/AdicionarFilme" data-type="submit" class="link1">Enviar</a></div>
-      <button type="submit" value="Submit">Submit</button>
-     </div>
-      </form>   
-    </div>
-    <div class="clear"></div>
-  </div>
-</div>
 </section>
 <!--==============================Bot_block=================================-->
 

@@ -12,17 +12,17 @@ import DAO.Postgres.ImagemPostgres;
 public class Main {
  	public static void main(String[] args){
  		
- 		/*Categorias x = new Categorias();
+ 		Filme x = new Filme();
  		x.setNome("Aventura");
  		x.setId(1);
 		//System.out.println(x.quantidadePaginasFilmeCategoria());
- 		ArrayList<Filme> isso = x.getFilmePorCategoriaPagina();
+ 		ArrayList<Filme> isso = x.getRecomendados();
  		for(int i=0;i<isso.size();i++){
- 			System.out.println(isso.get(i).getNome()+" "+isso.get(i).getUrl());
+ 			System.out.println(isso.get(i).getNome()+" "+isso.get(i).getImagem());
  			//System.out.println(x.updateUrl(Utilidades.formatoURL(isso.get(i).getNome()),isso.get(i).getId()));
- 		}*/
+ 		}
  		
- 		Usuario x = new Usuario();
+ 		/*Usuario x = new Usuario();
  		x.setEmail("cabral.mpa@gmail.com");
  		x.setNome("Marcos Azeredo");
  		x.setSenha("123456");
@@ -30,7 +30,7 @@ public class Main {
  		System.out.println(x.getUsuario(x.getEmail()).getNome());
  		//ArrayList<Filme> j = x.getFilmcategoria("Corrida");
  		//System.out.println(j);
- 
+ */
   		
  		//System.out.println(limpa(teste));
  		

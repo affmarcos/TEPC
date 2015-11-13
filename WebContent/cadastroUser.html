@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
      <head>
-     <title>Sobre</title>
+     <title>Cadastro Usuário</title>
      <meta charset="utf-8">
      <meta name="format-detection" content="telephone=no" />
      <link rel="icon" href="images/favicon.ico">
@@ -18,26 +18,11 @@
      <script>
     function goToByScroll(id){$('html,body').animate({scrollTop: $("#"+id).offset().top},'slow');}
      </script>
-        
-   
-    <!--[if lt IE 8]>
-       <div style=' clear: both; text-align:center; position: relative;'>
-         <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-           <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-         </a>
-      </div>
-    <![endif]-->
-    <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <link rel="stylesheet" media="screen" href="css/ie.css">
-
-
-    <![endif]-->
+      
      </head>
      <body class="" id="top">
 <!--==============================header=================================-->
 <header>
-
   <div class="container_12">
             <div class="grid_12">
                       <h2>
@@ -56,27 +41,65 @@
        <li><a href="categorias.jsp">Categorias</a></li>
        <li><a href="formulario.jsp"> Cadastro de Filme </a></li>
        <li><a href="contato.html">Fale Conosco</a></li>
-       <li class="current"><a href="/sobre.html">Sobre</a></li>
-       
+       <li><a href="sobre.html">Sobre</a></li>
      </ul>
     </nav>
     <div class="clear"></div>       
   </div>
-</header>
+</header>  
 
 <!--=====================Content======================-->
-<section class="content"><div class="ic">More Website Templates @ TemplateMonster.com - May 19, 2014!</div>
+<section class="content">
+
+	
   <div class="container_12">
-    
-      <h4>Quem somos</h4>
-            
-          
-           <p>Somos uma organização sem fins lucrativos! GO GO GOHORSE!
-          
+
+    <div class="grid_8">
+      <h3>Cadastro Usuário</h3>
+      <form action="/TEPC/AdicionarUsuario" id="formNome" method="post" enctype="form-data">                            
+	
+	<div class="grid_8">
+		Nome:
+      <label class="name">
+      <input type="text" name="name" pattern="[a-zA-Z\s]+$"  placeholder="Name" />
+      
+      </label>
     </div>
-    
+	<br/>
+
+<div class="grid_8">
+		E-mail:
+      <label class="email">
+      <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  name="email" placeholder="E-mail" />
+     
+      </label>
+    </div>
+	<br/>
+<div class="grid_8">
+		Senha:
+      <label class="password">
+      <input type="password" name="password" placeholder="Password" />
+      
+      </label>
+    </div>	
+	<br/>
+	
+<div class="grid_8">
+      
+      <div class="clear"></div>
+      <div class="btns">		
+      <button type="submit" value="Submit">Enviar</button>
+     </div>
+     </div>
+     </div>
+  
+    </div>
+</form>
+
 </section>
 <!--==============================Bot_block=================================-->
+
+
 <!--==============================footer=================================-->
 <footer> 
   <div class="container_12">
@@ -89,8 +112,8 @@
             <a href="#" class="fa fa-google-plus"></a>
             <a href="#" class="fa fa-instagram"></a>
           </div>
-          <div class="copy"><span class="brand">TidyHome </span>  &copy; <span id="copyright-year"></span>  | <a href="#">Privacy Policy</a> 
-            <div class="sub_copy">Website designed by <a href="http://www.templatemonster.com/" rel="nofollow">TemplateMonster.com</a></div>
+          <div class="copy"><span class="brand">RecoMoo </span>  &copy; <span id="copyright-year"></span>  | <a href="#">Privacy Policy</a> 
+            <div class="sub_copy">Website designed by ExtremeGoHorseCorporation</div>
           </div>
       </div>
     </div>
